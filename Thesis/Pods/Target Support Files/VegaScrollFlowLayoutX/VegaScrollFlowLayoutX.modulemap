@@ -1,0 +1,6 @@
+framework module VegaScrollFlowLayoutX {
+  umbrella header "VegaScrollFlowLayoutX-umbrella.h"
+
+  export *
+  module * { export * }
+}

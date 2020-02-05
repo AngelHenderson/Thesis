@@ -1,0 +1,6 @@
+framework module EKCollectionLayout {
+  umbrella header "EKCollectionLayout-umbrella.h"
+
+  export *
+  module * { export * }
+}

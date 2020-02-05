@@ -1,0 +1,6 @@
+framework module PictureInPicture {
+  umbrella header "PictureInPicture-umbrella.h"
+
+  export *
+  module * { export * }
+}

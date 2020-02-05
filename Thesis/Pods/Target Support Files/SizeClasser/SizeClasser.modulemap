@@ -1,0 +1,6 @@
+framework module SizeClasser {
+  umbrella header "SizeClasser-umbrella.h"
+
+  export *
+  module * { export * }
+}

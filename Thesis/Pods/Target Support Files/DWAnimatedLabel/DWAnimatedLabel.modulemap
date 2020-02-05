@@ -1,0 +1,6 @@
+framework module DWAnimatedLabel {
+  umbrella header "DWAnimatedLabel-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,213 @@
+project 'Thesis.xcodeproj'
+
+target "Thesis" do
+  use_frameworks!
+
+  #SDK Pods
+
+  #Crash Reporting
+  pod "Fabric"
+  pod "Crashlytics"
+
+  #Facebook
+  pod "FBSDKCoreKit/Swift"
+  pod "FBSDKLoginKit/Swift"
+  pod "FBSDKShareKit/Swift"
+  
+  #Firebase
+  pod "Firebase"
+  pod "Firebase/Core"
+  pod "Firebase/Analytics"
+  pod "Firebase/Database"
+  pod "FirebaseUI/Database"
+  pod "Firebase/Firestore"
+  pod "Firebase/Messaging"
+  pod "Firebase/Storage"
+  pod "Firebase/InAppMessagingDisplay"
+  pod "Firebase/DynamicLinks"
+
+  
+  #AuthKit
+  pod "Firebase/Auth"
+  pod "FBSDKLoginKit"
+  pod "GoogleSignIn"
+  
+  #User Interface
+  pod "SFSymbol" #https://github.com/Nirma/SFSymbol
+
+  #Google Demographic Data
+  pod "GoogleIDFASupport"
+
+  #Vision
+  pod "FaceAware"
+  pod 'Firebase/MLVision'
+  pod 'Firebase/MLVisionLabelModel'
+  pod 'Firebase/MLVisionObjectDetection'
+
+  
+  #NLP
+  pod "Firebase/MLNLTranslate"
+  pod "Firebase/MLNaturalLanguage"
+  pod "Firebase/MLNLLanguageID"
+  pod 'Firebase/MLCommon'
+  pod 'Firebase/MLNLSmartReply'
+  pod 'MaterialComponents/Chips'
+
+  #ML/AI
+  pod "Lumina"
+  pod "NSFWDetector"
+  pod "AAObnoxiousFilter"
+  pod "AAProfanityFilter"
+  
+  #pod 'VisionLab', git: 'https://github.com/cocoa-ai/VisionLab' (Local) 
+
+  #LoadingKit
+  pod "BRYXBanner"
+
+  #Networking
+  pod "SwiftyJSON"
+  pod "AFNetworking"
+  pod "Alamofire"
+  pod "AlamofireImage"
+  pod "Imaginary"
+  pod "Kingfisher"
+  
+  #Foundation
+  pod "SwifterSwift"
+  pod "IoniconsKit"
+  pod "AEAppVersion"
+  pod "SizeClasser"
+  pod "ReachabilitySwift"
+  pod "DeckTransition"
+  pod "BadgeSwift"
+  pod "TemporaryAlert"
+  pod "Bartinter"
+  pod "Closures"
+  pod "WhatsNewKit"
+  pod "EasySocialButton"
+  pod "EmptyStateKit"
+  pod "ResizingTokenField"
+  pod 'EKLongPress'
+  pod 'UIImageColors'
+  
+  #Date/Time
+  pod "Times"
+  pod "SwiftDate"
+  
+  #Alpha Pods
+
+  #pod "BottomSheetPresentation"  //Locally
+  #pod "NLSegmentControl"  //Locally
+  #pod "ProcessLoadingView"  //Locally
+
+  #Design
+  pod "Comets"
+  
+  #MusicKit
+  pod "NDAudioSuite"
+  pod "EFAutoScrollLabel"
+  
+  
+  #Foundation
+  pod "Menu"
+  pod "SwiftyMenu"
+  pod "TKSwitcherCollection"
+  pod "SnapLikeCollectionView"
+  pod "MSPeekCollectionViewDelegateImplementation"
+  pod "EKCollectionLayout"
+  
+  #pod "WaterfallLayout"  //Locally
+  #pod "FloatingPanel"  //Locally
+
+  #Alert
+  pod "SPAlert"
+
+  #Animation
+  pod "ViewAnimator"
+  pod "TransitionCoordinator"
+  pod "TransitionableTab"
+  pod "gooey-cell"
+  pod "LTMorphingLabel"
+  pod "Cosmos"
+  pod "VegaScrollFlowLayoutX"
+  pod "AISphereView"
+  pod "ASPCircleChart"
+  pod "MKRingProgressView"
+  #pod "fluid-slider" //Locally
+  #pod "DayNightSwitch" //Locally
+  pod "lottie-ios"
+  pod "SwiftSiriWaveformView"
+  pod "Magnetic"
+  pod "FaveButton"
+  pod "YUDisplacementTransition"
+  
+  #Document
+  pod "WeScan"
+  
+  
+
+  #Data Visualization
+  pod "RingGraph"
+  pod "CircleProgressView"
+  pod "RadarChart"
+  #pod "ChartLegends" //Locally
+  #pod "AMVennDiagramView" //Locally
+  #pod 'ChartProgressBar' //Locally
+  
+  #UILabel
+  pod "ActiveLabel"
+  pod "DWAnimatedLabel"
+
+  pod "Observable"
+
+  #SecureKit
+  pod "KeychainSwift"
+
+  #PIPKit
+  pod "PictureInPicture"
+  pod "NVPictureInPicture"
+
+  #Tag System
+  pod "TagListView"
+  pod "SwiftChart"
+  
+  #AR
+  pod "ARCL"
+
+  #Timer
+  pod "Repeat"
+
+  #Text
+  pod 'NextGrowingTextView'
+  pod "IQKeyboardManagerSwift"
+
+  #Photo
+  pod "PixelEngine"
+  pod "PixelEditor"
+  pod "imglyKit2"
+
+  pod "MaterialComponents/Buttons" , :modular_headers => true
+  pod "SwiftConfettiView"
+  
+  #Shadow
+  #pod "ShadowView"
+  #pod "EZLottieExtension", :git => 'https://github.com/dbarbos/EZLottieExtension.git', :tag => '0.2.0'
+
+  post_install do |installer|
+      installer.pods_project.build_configurations.each do |config|
+          config.build_settings.delete('CODE_SIGNING_ALLOWED')
+          config.build_settings.delete('CODE_SIGNING_REQUIRED')
+      end
+      
+      installer.pods_project.targets.each do |target|
+          if ['TemporaryAlert', 'IoniconsKit', 'SwiftChart', 'PictureInPicture', 'TKSwitcherCollection'].include? target.name
+              target.build_configurations.each do |config|
+                  config.build_settings['SWIFT_VERSION'] = '4.0'
+              end
+          end
+      end
+  end
+
+end
+
+

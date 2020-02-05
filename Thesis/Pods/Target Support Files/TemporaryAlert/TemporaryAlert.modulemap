@@ -1,0 +1,6 @@
+framework module TemporaryAlert {
+  umbrella header "TemporaryAlert-umbrella.h"
+
+  export *
+  module * { export * }
+}

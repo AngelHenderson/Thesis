@@ -1,0 +1,6 @@
+framework module EKLongPress {
+  umbrella header "EKLongPress-umbrella.h"
+
+  export *
+  module * { export * }
+}

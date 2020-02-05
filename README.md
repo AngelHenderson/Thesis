@@ -1,6 +1,8 @@
 Common Sense Reasoning in Autonomous Artificial Intelligent Agents through Mobile Computing
 ==========================================
 
+This repository contains work from my Master's thesis at Harvard University. 
+
 Abstract
 --------
 
@@ -10,3 +12,7 @@ This thesis presents the design, analysis, and implementation of an autonomous a
 
 Ultimately, we aim to demonstrate, through mobile computation, an autonomous artificial intelligent agent that demonstrates common sense reasoning and capabilities that are more aligned with that of strong AI versus that of weak AI. 
 
+
+Contact Information
+--------
+Please contact me at angelhenderson@g.harvard.edu for information about this thesis

@@ -1,0 +1,5 @@
+#import "FIRNaturalLanguage+SmartReply.h"
+#import "FIRSmartReply.h"
+#import "FIRSmartReplySuggestion.h"
+#import "FIRSmartReplySuggestionResult.h"
+#import "FIRTextMessage.h"
