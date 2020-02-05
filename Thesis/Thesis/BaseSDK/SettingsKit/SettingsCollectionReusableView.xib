@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SettingsCollectionReusableView" id="0cj-SH-MgI" customClass="SettingsCollectionReusableView" customModule="OnePlace" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWI-TG-6Ar">
+                    <rect key="frame" x="10" y="40" width="394" height="0.0"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottomMargin" secondItem="qWI-TG-6Ar" secondAttribute="bottom" id="kLY-DN-wpx"/>
+                <constraint firstItem="qWI-TG-6Ar" firstAttribute="leading" secondItem="0cj-SH-MgI" secondAttribute="leading" constant="10" id="nlJ-3T-lBH"/>
+                <constraint firstAttribute="trailing" secondItem="qWI-TG-6Ar" secondAttribute="trailing" constant="10" id="sgI-wJ-0ca"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="S34-Sj-Xbv"/>
+            <connections>
+                <outlet property="titleLabel" destination="qWI-TG-6Ar" id="YIF-8B-cDQ"/>
+            </connections>
+        </collectionReusableView>
+    </objects>
+</document>

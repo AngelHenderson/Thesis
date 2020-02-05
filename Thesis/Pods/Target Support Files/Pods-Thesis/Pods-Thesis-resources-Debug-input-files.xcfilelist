@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-Thesis/Pods-Thesis-resources.sh
+${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMLNLSmartReply/PredictOnDeviceResource.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMLNLTranslate/FirebaseMLNLTranslate_resource.bundle
+${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle

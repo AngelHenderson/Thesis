@@ -1,0 +1,80 @@
+import UIKit
+
+open class ImageClassificationController<Service: ClassificationServiceProtocol>: UIViewController,
+PhotoSourceControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate  {
+  /// View with image, button and labels
+  public private(set) lazy var mainView = ImageClassificationView(frame: .zero)
+  /// Service used to perform gender, age and emotion classification
+  public let classificationService: Service = .init()
+  /// Status bar style
+  open override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
+
+  // MARK: - View lifecycle
+
+  open override func viewDidLoad() {
+    super.viewDidLoad()
+    mainView.frame = view.bounds
+    mainView.button.setTitle("Choose photo", for: .normal)
+    mainView.button.addTarget(self, action: #selector(handleSelectPhotoTap), for: .touchUpInside)
+    view.addSubview(mainView)
+
+    mainView.setupConstraints()
+    classificationService.setup()
+  }
+
+  open override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    mainView.frame = view.bounds
+  }
+
+  // MARK: - Actions
+
+  /// Present image picker
+  @objc private func handleSelectPhotoTap() {
+    let sourcePicker = PhotoSourceController()
+    sourcePicker.delegate = self
+    present(sourcePicker, animated: true)
+  }
+
+  // MARK: - PhotoSourceControllerDelegate
+
+  public func photoSourceController(_ controller: PhotoSourceController,
+                                    didSelectSourceType sourceType: UIImagePickerController.SourceType) {
+    let imagePicker = UIImagePickerController()
+    imagePicker.delegate = self
+    imagePicker.allowsEditing = true
+    imagePicker.sourceType = sourceType
+    present(imagePicker, animated: true)
+  }
+
+  // MARK: - UIImagePickerControllerDelegate
+
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+      var editedImage : UIImage!
+      
+      if let image = info[.editedImage] as? UIImage {
+          editedImage = image
+      }else if let image = info[.originalImage] as? UIImage {
+          editedImage = image
+      }
+    
+    guard let image = editedImage, let ciImage = CIImage(image: image) else {
+      print("Can't analyze selected photo")
+      return
+    }
+
+    DispatchQueue.main.async { [weak mainView] in
+      mainView?.imageView.image = image
+      mainView?.label.text = ""
+    }
+
+    picker.dismiss(animated: true)
+
+    // Run Core ML classifier
+    DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+      self?.classificationService.classify(image: ciImage)
+    }
+  }
+}

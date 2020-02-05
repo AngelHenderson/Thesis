@@ -25,6 +25,7 @@
 #import <VideoToolbox/VideoToolbox.h>
 #import "MTICoreImageRendering.h"
 #import "MTIRenderTask.h"
+#import "MTIImageRenderingContext+Internal.h"
 
 @implementation MTIContext (Rendering)
 
@@ -223,6 +224,7 @@ static const void * const MTICIImageMTIImageAssociationKey = &MTICIImageMTIImage
     
     MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:targetPixelFormat width:frameWidth height:frameHeight mipmapped:NO];
     textureDescriptor.usage = MTLTextureUsageShaderWrite | MTLTextureUsageRenderTarget;
+    textureDescriptor.storageMode = MTLStorageModePrivate;
     id<MTICVMetalTexture> renderTexture = [self.coreVideoTextureBridge newTextureWithCVImageBuffer:pixelBuffer textureDescriptor:textureDescriptor planeIndex:0 error:&error];
     if (!renderTexture || error) {
         if (inOutError) {
@@ -584,6 +586,37 @@ static const void * const MTICIImageMTIImageAssociationKey = &MTICIImageMTIImage
         [renderingContext.commandBuffer waitUntilScheduled];
         return task;
     }
+}
+
+- (MTIRenderTask *)startTaskToRenderImage:(MTIImage *)image error:(NSError * __autoreleasing *)inOutError completion:(void (^)(MTIRenderTask * _Nonnull))completion {
+    [self lockForRendering];
+    @MTI_DEFER {
+        [self unlockForRendering];
+    };
+    
+    MTIImageRenderingContext *renderingContext = [[MTIImageRenderingContext alloc] initWithContext:self];
+    
+    NSError *error = nil;
+    id<MTIImagePromiseResolution> resolution = [renderingContext resolutionForImage:image error:&error];
+    @MTI_DEFER {
+        [resolution markAsConsumedBy:self];
+    };
+    if (error) {
+        if (inOutError) {
+            *inOutError = error;
+        }
+        return nil;
+    }
+    
+    MTIRenderTask *task = [[MTIRenderTask alloc] initWithCommandBuffer:renderingContext.commandBuffer];
+    if (completion) {
+        [renderingContext.commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> cb) {
+            completion(task);
+        }];
+    }
+    [renderingContext.commandBuffer commit];
+    [renderingContext.commandBuffer waitUntilScheduled];
+    return task;
 }
 
 @end

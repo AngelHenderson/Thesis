@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SettingCollectionViewCell" customModule="Crosswalk" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="388" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="388" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDS-pG-CuL">
+                        <rect key="frame" x="10" y="3" width="368" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Xe-Sm-Quk">
+                                <rect key="frame" x="15" y="22" width="338" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="5Xe-Sm-Quk" firstAttribute="centerY" secondItem="WDS-pG-CuL" secondAttribute="centerY" id="6rz-3N-SuN"/>
+                            <constraint firstItem="5Xe-Sm-Quk" firstAttribute="leading" secondItem="WDS-pG-CuL" secondAttribute="leading" constant="15" id="CND-v0-qOB"/>
+                            <constraint firstItem="5Xe-Sm-Quk" firstAttribute="leading" secondItem="WDS-pG-CuL" secondAttribute="leading" constant="15" id="lfc-CS-GIN"/>
+                            <constraint firstAttribute="trailing" secondItem="5Xe-Sm-Quk" secondAttribute="trailing" constant="15" id="pzz-3p-bWX"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="WDS-pG-CuL" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.88" id="44c-yY-1nT"/>
+                <constraint firstAttribute="trailing" secondItem="WDS-pG-CuL" secondAttribute="trailing" constant="10" id="TWb-53-F4T"/>
+                <constraint firstItem="WDS-pG-CuL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="biD-FR-wx5"/>
+                <constraint firstItem="WDS-pG-CuL" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="xD4-QY-2K7"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="388" height="50"/>
+            <connections>
+                <outlet property="bottomView" destination="WDS-pG-CuL" id="NOg-ti-gKb"/>
+                <outlet property="titleLabel" destination="5Xe-Sm-Quk" id="igM-Kq-CgR"/>
+            </connections>
+            <point key="canvasLocation" x="24" y="-12"/>
+        </collectionViewCell>
+    </objects>
+</document>

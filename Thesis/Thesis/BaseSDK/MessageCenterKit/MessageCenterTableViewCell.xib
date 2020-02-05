@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCenterTableViewCell" rowHeight="60" id="9TN-RM-OBY" customClass="MessageCenterTableViewCell" customModule="LightSource" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9TN-RM-OBY" id="RoA-QA-XqG">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQW-Ma-jRW">
+                        <rect key="frame" x="16" y="11" width="273" height="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZl-G9-lmv">
+                        <rect key="frame" x="16" y="36" width="35.5" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vz-bu-QYX">
+                        <rect key="frame" x="297" y="11" width="15" height="15"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="6rW-9v-Tla"/>
+                            <constraint firstAttribute="height" constant="15" id="nsj-5Z-Efb"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="ZZl-G9-lmv" secondAttribute="bottom" constant="1" id="5bn-So-NYo"/>
+                    <constraint firstItem="RQW-Ma-jRW" firstAttribute="leading" secondItem="RoA-QA-XqG" secondAttribute="leadingMargin" id="6pp-Cf-ACW"/>
+                    <constraint firstItem="ZZl-G9-lmv" firstAttribute="top" secondItem="RQW-Ma-jRW" secondAttribute="bottom" constant="8" id="B06-Pj-jUj"/>
+                    <constraint firstAttribute="trailing" secondItem="0vz-bu-QYX" secondAttribute="trailing" constant="8" id="H7G-0w-Khr"/>
+                    <constraint firstItem="0vz-bu-QYX" firstAttribute="top" secondItem="RQW-Ma-jRW" secondAttribute="top" id="YAK-Bm-7MC"/>
+                    <constraint firstItem="RQW-Ma-jRW" firstAttribute="top" secondItem="RoA-QA-XqG" secondAttribute="topMargin" id="cwl-xX-idK"/>
+                    <constraint firstItem="0vz-bu-QYX" firstAttribute="leading" secondItem="RQW-Ma-jRW" secondAttribute="trailing" constant="8" id="eae-eF-eHa"/>
+                    <constraint firstItem="ZZl-G9-lmv" firstAttribute="leading" secondItem="RoA-QA-XqG" secondAttribute="leadingMargin" id="oK4-nO-nAR"/>
+                </constraints>
+                <viewLayoutGuide key="safeArea" id="gXe-VS-si3"/>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="buttonView" destination="0vz-bu-QYX" id="lb2-V7-y4I"/>
+                <outlet property="subtitleLabel" destination="ZZl-G9-lmv" id="zaM-Dd-R1E"/>
+                <outlet property="titleLabel" destination="RQW-Ma-jRW" id="zCO-it-ZAq"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="190"/>
+        </tableViewCell>
+    </objects>
+</document>
