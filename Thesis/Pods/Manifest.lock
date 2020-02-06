@@ -214,25 +214,25 @@ PODS:
   - Fabric (1.10.2)
   - FaceAware (2.1.0)
   - FaveButton (3.2.1)
-  - FBSDKCoreKit (5.15.1):
-    - FBSDKCoreKit/Basics (= 5.15.1)
-    - FBSDKCoreKit/Core (= 5.15.1)
-  - FBSDKCoreKit/Basics (5.15.1)
-  - FBSDKCoreKit/Core (5.15.1):
+  - FBSDKCoreKit (6.0.0):
+    - FBSDKCoreKit/Basics (= 6.0.0)
+    - FBSDKCoreKit/Core (= 6.0.0)
+  - FBSDKCoreKit/Basics (6.0.0)
+  - FBSDKCoreKit/Core (6.0.0):
     - FBSDKCoreKit/Basics
-  - FBSDKCoreKit/Swift (5.15.1):
+  - FBSDKCoreKit/Swift (6.0.0):
     - FBSDKCoreKit/Core
-  - FBSDKLoginKit (5.15.1):
-    - FBSDKLoginKit/Login (= 5.15.1)
-  - FBSDKLoginKit/Login (5.15.1):
-    - FBSDKCoreKit (~> 5.0)
-  - FBSDKLoginKit/Swift (5.15.1):
-    - FBSDKCoreKit/Swift (~> 5.15.1)
+  - FBSDKLoginKit (6.0.0):
+    - FBSDKLoginKit/Login (= 6.0.0)
+  - FBSDKLoginKit/Login (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
+  - FBSDKLoginKit/Swift (6.0.0):
+    - FBSDKCoreKit/Swift (~> 6.0.0)
     - FBSDKLoginKit/Login
-  - FBSDKShareKit/Share (5.15.1):
-    - FBSDKCoreKit (~> 5.0)
-  - FBSDKShareKit/Swift (5.15.1):
-    - FBSDKCoreKit/Swift (~> 5.15.1)
+  - FBSDKShareKit/Share (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
+  - FBSDKShareKit/Swift (6.0.0):
+    - FBSDKCoreKit/Swift (~> 6.0.0)
     - FBSDKShareKit/Share
   - Firebase (6.16.0):
     - Firebase/Core (= 6.16.0)
@@ -328,7 +328,7 @@ PODS:
   - FirebaseDynamicLinks (4.0.6):
     - FirebaseAnalyticsInterop (~> 1.3)
     - FirebaseCore (~> 6.2)
-  - FirebaseFirestore (1.10.0):
+  - FirebaseFirestore (1.10.1):
     - abseil/algorithm (= 0.20190808)
     - abseil/base (= 0.20190808)
     - abseil/memory (= 0.20190808)
@@ -573,7 +573,7 @@ PODS:
   - MetalPetal/Swift (1.8.0):
     - MetalPetal/Core
   - MKRingProgressView (2.2.2)
-  - MSPeekCollectionViewDelegateImplementation (3.0.3)
+  - MSPeekCollectionViewDelegateImplementation (3.0.4)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -923,9 +923,9 @@ SPEC CHECKSUMS:
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FaceAware: f1266b8719a1a90da3d763b8cb428554edf0fa61
   FaveButton: 93cfebf6030336fa7653fad2068c3152ed668b39
-  FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
-  FBSDKLoginKit: f1ea8026a58b52d30c9f2e6a58ca7d813619fb83
-  FBSDKShareKit: 259737eab3cc807087374553abdf588b3096ba55
+  FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
+  FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
+  FBSDKShareKit: 210dcda2603042cf73f31983fc99df4dac06f1d8
   Firebase: 497158b816d0a86fc31babbd05546fcd7e6083ff
   FirebaseABTesting: 0d10f3cdc3fa00f3f175b5b56c1003c8e888299f
   FirebaseAnalytics: cf95d3aab897612783020fbd98401d5366f135ee
@@ -937,7 +937,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
   FirebaseDatabase: 0144e0706a4761f1b0e8679572eba8095ddb59be
   FirebaseDynamicLinks: 5ba2a0d46ba1615c6c08819fc964c495ca1d0845
-  FirebaseFirestore: cee8f861d68dadce998876b78a4b75701bc94302
+  FirebaseFirestore: ff429edd15d5acdd2b8da02ea69483313e4ae0a7
   FirebaseInAppMessagingDisplay: b55300a5353ed570ee18e7be6d853feccb17e4aa
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
@@ -983,7 +983,7 @@ SPEC CHECKSUMS:
   Menu: a1e69a2e8e641192ddec0cf55cd380cde6e27b1e
   MetalPetal: 1720e3d54f6a2502fe0b1f40756cfc5c667c6ac3
   MKRingProgressView: b558eff66a648bd77b11f61cfc5603ae96008077
-  MSPeekCollectionViewDelegateImplementation: 3e6beb9a722daf6c920ba5db21083cbe7d0e7359
+  MSPeekCollectionViewDelegateImplementation: eb11d5777c4f1dd1004ca9b75ea9e1a7e71e4924
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   NDAudioSuite: 1117c5aae7c5370472486fe0b1b939a4f75ea61d
   NextGrowingTextView: 0e267e80bc203e813dc637fd1b011111ad572d57
@@ -1027,6 +1027,6 @@ SPEC CHECKSUMS:
   WhatsNewKit: fc8ca82510148c030d66b3bb9b937175f8dcb3fd
   YUDisplacementTransition: a4d7ea98368c3650820697c46685e95fd42222af
 
-PODFILE CHECKSUM: 0ac5a45979afc2ae34dd74eede81e4ad5a9001b4
+PODFILE CHECKSUM: ede933b580f1530e5cdba0126a0ac4fe5917d226
 
 COCOAPODS: 1.8.4

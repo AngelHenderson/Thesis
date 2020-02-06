@@ -17,7 +17,7 @@ let authenicationCopy = ""
 func overrideConfigurations(){
     ColorKit.themeColor = #colorLiteral(red: 0.3301599622, green: 0.5676314235, blue: 0.947881639, alpha: 1)
 
-    AnalyticsKit.UAToken = "UA-66716002-1"
+    AnalyticsKit.UAToken = ""
     
     AppCoreKit.supportBackgroundAudio = false
     

@@ -189,6 +189,10 @@ target "Thesis" do
   pod "MaterialComponents/Buttons" , :modular_headers => true
   pod "SwiftConfettiView"
   
+  
+  
+  #Thesis Pods
+  
   #Shadow
   #pod "ShadowView"
   #pod "EZLottieExtension", :git => 'https://github.com/dbarbos/EZLottieExtension.git', :tag => '0.2.0'

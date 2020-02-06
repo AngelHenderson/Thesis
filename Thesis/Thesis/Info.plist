@@ -70,5 +70,29 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Do you allow this app to know your current location?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Do you allow this app to know your current location?</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Do you allow this app to know your current location?</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This permission is required for beta testing purposes</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This permission is required for beta testing purposes</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This permission is required for beta testing purposes</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Alpha requires access to the iOS Camera to operate.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Alpha requires access to the microphone to record video.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This permission is required for beta testing purposes</string>
+	<key>NSSiriUsageDescription</key>
+	<string>This permission is required for beta testing purposes</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This permission is required for beta testing purposes</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

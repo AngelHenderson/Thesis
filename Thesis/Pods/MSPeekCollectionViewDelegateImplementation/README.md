@@ -5,6 +5,7 @@ The peeking logic is now done using a custom `UICollectionViewLayout` which make
 
 # Migrating from 2.0.0 to 3.0.0
 I've tried to keep minimal effort to migrate from v2 to v3. Here are the steps:
+
 1- Replace `MSPeekCollectionViewDelegateImplementation` initialization with `MSCollectionViewPeekingBehavior`
 
 2- On your `collectionView`, call `configureForPeekingBehavior` like this:
@@ -207,6 +208,10 @@ collectionView.configureForPeekingBehavior(behavior: behavior)
 ## Author
 
 Maher Santina, maher.santina90@gmail.com
+
+## Sponsor
+
+If you're liking this repo I'd really appreciate it if you sponsor me (Orange Juice) so that I can continue supporting this project. I'm also working on adding more reusable UI elements similar to this one to make developer's lives easier. Please see [my sponsor page](https://github.com/sponsors/MaherKSantina/) for more details
 
 ## Contributing
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2EB428DC147D0DD5B467179C /* Pods_Thesis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68484B57BB907365EFFFE6B2 /* Pods_Thesis.framework */; };
+		58AC64C123EC96A8003F9F13 /* DSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64C023EC96A7003F9F13 /* DSTextView.swift */; };
 		58DD113723EA4DD50004880F /* ThesisAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113623EA4DD50004880F /* ThesisAppDelegate.swift */; };
 		58DD113923EA4DD50004880F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113823EA4DD50004880F /* SceneDelegate.swift */; };
 		58DD113B23EA4DD50004880F /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113A23EA4DD50004880F /* FirstViewController.swift */; };
@@ -404,6 +405,7 @@
 /* Begin PBXFileReference section */
 		4B6CEF23077DD6703C0EBDED /* Pods-Thesis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thesis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Thesis/Pods-Thesis.debug.xcconfig"; sourceTree = "<group>"; };
 		53BEB1BE0B06DDEFABB8E6A8 /* Pods-Thesis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thesis.release.xcconfig"; path = "Pods/Target Support Files/Pods-Thesis/Pods-Thesis.release.xcconfig"; sourceTree = "<group>"; };
+		58AC64C023EC96A7003F9F13 /* DSTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSTextView.swift; sourceTree = "<group>"; };
 		58DD113323EA4DD50004880F /* Thesis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thesis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DD113623EA4DD50004880F /* ThesisAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThesisAppDelegate.swift; sourceTree = "<group>"; };
 		58DD113823EA4DD50004880F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1612,6 +1614,7 @@
 		58DD12A123EA5E850004880F /* Alpha Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				58AC64C023EC96A7003F9F13 /* DSTextView.swift */,
 				58DD12A223EA5E850004880F /* BubbleTabBar */,
 				58DD12A623EA5E850004880F /* DocumentClassifier */,
 				58DD12A923EA5E850004880F /* VisionLab */,
@@ -2710,6 +2713,7 @@
 				58DD140923EA5E860004880F /* UIImage+Size.swift in Sources */,
 				58DD127E23EA5D720004880F /* IQInvocation.swift in Sources */,
 				58DD143A23EA5E860004880F /* SparkView.swift in Sources */,
+				58AC64C123EC96A8003F9F13 /* DSTextView.swift in Sources */,
 				58DD129523EA5D720004880F /* LNPopupBar.m in Sources */,
 				58DD128F23EA5D720004880F /* LNPopupCustomBarViewController.m in Sources */,
 				58DD129423EA5D720004880F /* LNPopupLongPressGesutreRecognizer.m in Sources */,
