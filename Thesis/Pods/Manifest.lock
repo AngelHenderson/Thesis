@@ -234,6 +234,7 @@ PODS:
   - FBSDKShareKit/Swift (6.0.0):
     - FBSDKCoreKit/Swift (~> 6.0.0)
     - FBSDKShareKit/Share
+  - FDSoundActivatedRecorder (3.1.0)
   - Firebase (6.16.0):
     - Firebase/Core (= 6.16.0)
   - Firebase/Analytics (6.16.0):
@@ -678,6 +679,7 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - FBSDKLoginKit/Swift
   - FBSDKShareKit/Swift
+  - FDSoundActivatedRecorder
   - Firebase
   - Firebase/Analytics
   - Firebase/Auth
@@ -789,6 +791,7 @@ SPEC REPOS:
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
+    - FDSoundActivatedRecorder
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -926,6 +929,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
   FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
   FBSDKShareKit: 210dcda2603042cf73f31983fc99df4dac06f1d8
+  FDSoundActivatedRecorder: f08e5114767d843a7d781488cb3ed209a3ffe546
   Firebase: 497158b816d0a86fc31babbd05546fcd7e6083ff
   FirebaseABTesting: 0d10f3cdc3fa00f3f175b5b56c1003c8e888299f
   FirebaseAnalytics: cf95d3aab897612783020fbd98401d5366f135ee
@@ -1027,6 +1031,6 @@ SPEC CHECKSUMS:
   WhatsNewKit: fc8ca82510148c030d66b3bb9b937175f8dcb3fd
   YUDisplacementTransition: a4d7ea98368c3650820697c46685e95fd42222af
 
-PODFILE CHECKSUM: ede933b580f1530e5cdba0126a0ac4fe5917d226
+PODFILE CHECKSUM: c9406798ed322a756a32a12d872a5717678611ef
 
 COCOAPODS: 1.8.4

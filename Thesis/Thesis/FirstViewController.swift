@@ -7,26 +7,134 @@
 //
 
 import UIKit
+
+import AVKit
+import AVFoundation
+import FDSoundActivatedRecorder
+
+import MapKit
+import CoreLocation
+
+import Vision
+import ImageIO
+
 import CoreML
+import SoundAnalysis
 
 class FirstViewController: UIViewController {
     
-    @IBOutlet weak var documentTextView: UITextView?
-    @IBOutlet weak var inputTextView: DSTextView!
-    
-    @IBOutlet weak var answerButton: UIButton?
-    @IBOutlet weak var knowledgeButton: UIButton?
-    @IBOutlet weak var analyzeButton: UIButton?
+    //Map Frameworks
+    @IBOutlet weak var mapView: MKMapView!
+    var myLatitude = ""
+    var myLongitude = ""
+    var locationManager: CLLocationManager!
+    let annotation = MKPointAnnotation()
+    var places = PredictionLocationList().place
+    typealias Prediction = (String, Double)
 
+    
+    //Recording Frameworks
+    var recorder = FDSoundActivatedRecorderMock()
+    var savedURL: URL? = nil
+    var player = AVPlayer()
+    var sampleSquares: [UIView] = [] //Most recent are added to end
+    let sampleSize: CGFloat = 10.0
+    @IBOutlet weak var graph: UIView!
+    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var microphoneLevel: UILabel!
+    
+    //Bert Document
     var document: Document? {
         didSet {
             configureTextView()
         }
     }
+    
+    //User Interface
+    @IBOutlet weak var scrollView: UIScrollView?
+    @IBOutlet var snappedImageView: UIImageView?
+    @IBOutlet weak var mainImageView: UIImageView?
+    @IBOutlet weak var heatmapView: DrawingHeatmapView!
+
+    lazy var percentFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }()
+    
+    
+    //AI Views
+    @IBOutlet var ageView: SegmentView?
+    @IBOutlet var genderView: SegmentView?
+    @IBOutlet var emotionView: SegmentView?
+    @IBOutlet var classificationView: SegmentView?
+    @IBOutlet var topicView: SegmentView?
+    @IBOutlet var languageView: SegmentView?
+    @IBOutlet var locationView: SegmentView?
+    @IBOutlet var sentimentView: SegmentView?
+    @IBOutlet var foodView: SegmentView?
+    @IBOutlet var physicalView: SegmentView?
+    @IBOutlet var placeView: SegmentView?
+    
+    @IBOutlet var ageContainerView: UIView?
+    @IBOutlet var genderContainerView: UIView?
+    @IBOutlet var emotionContainerView: UIView?
+    @IBOutlet var classificationContainerView: UIView?
+    @IBOutlet var topicContainerView: UIView?
+    @IBOutlet var languageContainerView: UIView?
+    @IBOutlet var locationContainerView: UIView?
+    @IBOutlet var sentimentContainerView: UIView?
+    @IBOutlet var foodContainerView: UIView?
+    @IBOutlet var physicalContainerView: UIView?
+    @IBOutlet var placeContainerView: UIView?
+    
+    //TextView
+    @IBOutlet weak var documentTextView: UITextView?
+    @IBOutlet weak var inputTextView: DSTextView!
+    
+    //Buttons
+    @IBOutlet weak var answerButton: UIButton?
+    @IBOutlet weak var knowledgeButton: UIButton?
+    @IBOutlet weak var analyzeButton: UIButton?
+    
+    @IBOutlet weak var micButton: UIBarButtonItem?
+    @IBOutlet weak var photoButton: UIBarButtonItem?
+    @IBOutlet weak var videoButton: UIBarButtonItem?
+
+
+
+
+    //Classification Module
+    public let classificationService: ClassificationService = ClassificationService.init()
+
+    lazy var classificationRequest: VNCoreMLRequest = {
+        do {
+            let model = try VNCoreMLModel(for: MobileNet().model)
+            let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
+                self?.processClassifications(for: request, error: error)
+            })
+            request.imageCropAndScaleOption = .centerCrop
+            return request
+        } catch {
+            fatalError("Failed to load Vision ML model: \(error)")
+        }
+    }()
+    
 
     //CoreML Models
-    let bert = BERT()
+    let bert = BERT() //BERT
 
+    let documentClassifier = DocumentClassifier() //Category
+    let RN1015k500Classifier = RN1015k500() //Location Prediction and Classification
+    typealias EstimationModel = model_cpm  //PoseNet
+    var postProcessor: HeatmapPostProcessor = HeatmapPostProcessor() //HeatMap
+    
+    //Sound Analysis
+    var soundClassifierModel: MLModel!
+    var audioFileAnalyzer: SNAudioFileAnalyzer!
+
+    
     // MARK: - Lifecycle
 
 
@@ -36,6 +144,23 @@ class FirstViewController: UIViewController {
         
         answerButton?.onTap { [weak self] in
             self?.answerQuestion()
+        }
+        
+        photoButton?.onTap { [weak self] in
+            self?.hideAllSections()
+            self?.handleSelectPhotoTap()
+        }
+        
+        analyzeButton?.onTap { [weak self] in
+            self?.hideAllSections()
+            guard let text = self?.documentTextView?.text else {return}
+            self?.predictTopic(text)
+            if let sentiment = self?.classificationService.predictSentiment(from: text){
+                self?.predictSentiment(sentiment: sentiment, text: text)
+            }
+            text.languageAnalysisMLKit(){ string in
+                self?.languageView?.subtitleLabel?.text = string
+            }
         }
     }
     
@@ -47,6 +172,30 @@ class FirstViewController: UIViewController {
         super.viewDidAppear(animated)
     }
     
+    
+    // MARK: - Actions
+
+    @objc func handleSelectPhotoTap() {
+      let sourcePicker = PhotoSourceController()
+      sourcePicker.delegate = self
+      present(sourcePicker, animated: true)
+    }
+    
+    // MARK: - Functions
+    
+    func hideAllSections(){
+//        ageContainerView?.isHidden = true
+//        genderContainerView?.isHidden = true
+//        emotionContainerView?.isHidden = true
+//        classificationContainerView?.isHidden = true
+//        topicContainerView?.isHidden = true
+//        languageContainerView?.isHidden = true
+//        locationContainerView?.isHidden = true
+//        sentimentContainerView?.isHidden = true
+//        foodContainerView?.isHidden = true
+//        physicalContainerView?.isHidden = true
+//        placeContainerView?.isHidden = true
+    }
     
     func answerQuestion(){
         guard let document = document else {return}
@@ -87,6 +236,9 @@ class FirstViewController: UIViewController {
     func configureInterface() {
         configureTextView()
         configureInputTextView()
+        configureRecorder()
+        configureLocation()
+        configureClassification()
     }
 
 
@@ -121,6 +273,31 @@ class FirstViewController: UIViewController {
         inputTextView.layer.borderWidth = 0
     }
     
+    func configureRecorder() {
+        recorder.delegate = self
+        recorder.addObserver(self, forKeyPath: "microphoneLevel", options:.new, context: nil)
+        recorder.intervalCallback = {currentLevel in self.drawSample(currentLevel: currentLevel)}
+        recorder.microphoneLevelSilenceThreshold = -60
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        _ = try? audioSession.setCategory(AVAudioSession.Category(rawValue:AVAudioSession.Category.playAndRecord.rawValue))
+        _ = try? audioSession.setActive(true)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        switch change![NSKeyValueChangeKey.newKey] {
+        case let level as Float:
+            progressView.progress = level
+            microphoneLevel.text = String(format: "%0.2f", level)
+        default:
+            break
+        }
+    }
+    
+    func drawSample(currentLevel: Float) {
+
+    }
+
 }
 
 
@@ -143,13 +320,217 @@ extension FirstViewController: UITextFieldDelegate, UITextViewDelegate {
     
 }
 
+// MARK: - Image Classification
+
+extension FirstViewController {
+
+     func updateClassifications(for image: UIImage) {
+        let orientation = CGImagePropertyOrientation(image.imageOrientation)
+         guard let ciImage = CIImage(image: image) else { fatalError("Unable to create \(CIImage.self) from \(image).") }
+         
+         DispatchQueue.global(qos: .userInitiated).async {
+             let handler = VNImageRequestHandler(ciImage: ciImage, orientation: orientation)
+             do {
+                 try handler.perform([self.classificationRequest])
+             } catch {
+                 print("Failed to perform classification.\n\(error.localizedDescription)")
+             }
+         }
+     }
+     
+     /// Updates the UI with the results of the classification.
+     func processClassifications(for request: VNRequest, error: Error?) {
+         DispatchQueue.main.async {
+             guard let results = request.results else {
+                self.classificationView?.subtitleLabel?.text = "Unable to classify image.\n\(error!.localizedDescription)"
+                 return
+             }
+             // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
+             let classifications = results as! [VNClassificationObservation]
+         
+             if classifications.isEmpty {
+                self.classificationView?.subtitleLabel?.text = "Nothing recognized."
+             } else {
+                 // Display top classifications ranked by confidence in the UI.
+                 let topClassifications = classifications.prefix(2)
+                 let descriptions = topClassifications.map { classification in
+                     // Formats the classification for display; e.g. "(0.37) cliff, drop, drop-off".
+//                    return String(format: " %@ (%.2f)", classification.identifier, classification.confidence * 100)
+                    return "\(classification.identifier) \(Int(classification.confidence * 100))%"
+
+                 }
+                self.classificationView?.subtitleLabel?.text = descriptions.joined(separator: "\n")
+             }
+         }
+     }
+     
+}
+
+// MARK: - Sentiment Analysis
+
+extension FirstViewController {
+
+    func predictSentiment(sentiment: Sentiment, text: String) {
+        sentimentView?.subtitleLabel?.text = "\(sentiment.emoji) \(sentimentAnalysis(text: text))"
+    }
+}
+
+// MARK: - Topic Category Analysis
+
+extension FirstViewController {
+    func predictTopic(_ text: String) {
+        guard let classification = documentClassifier.classify(text) else { return }
+        let prediction = classification.prediction
+        guard let percent = percentFormatter.string(from: NSNumber(value: prediction.probability)) else { return }
+        topicView?.subtitleLabel?.text = prediction.category.rawValue + " " + "(\(percent))"
+    }
+}
+
+// MARK: - Image Classification
+
+
+extension FirstViewController {
+    
+    func processImage(image: UIImage) {
+        let model = Food101()
+        let size = CGSize(width: 299, height: 299)
+
+        guard let buffer = image.resize(to: size)?.pixelBuffer() else {
+            fatalError("Scaling or converting to pixel buffer failed!")
+        }
+
+        guard let result = try? model.prediction(image: buffer) else {
+            fatalError("Prediction failed!")
+        }
+
+        let confidence = result.foodConfidence["\(result.classLabel)"]! * 100.0
+        let converted = String(format: "%.2f", confidence)
+        print("Food Classifications \(result.classLabel) (\(converted)%)")
+        DispatchQueue.main.async {
+            self.foodView?.subtitleLabel?.text = "\(result.classLabel) (\(converted)%)"
+        }
+        
+    }
+    
+    func recognizePlace(image: UIImage) {
+
+        let model = try! VNCoreMLModel(for: GoogLeNetPlaces().model)
+        let request = VNCoreMLRequest(model: model) { (request, error) in
+            guard let results = request.results as? [VNClassificationObservation] else {
+                fatalError("Results Error")
+            }
+            
+            DispatchQueue.main.async {
+                var result = ""
+                for classification in results {
+                    result += "\(classification.identifier) \(classification.confidence * 100)％\n"
+                }
+                print(result)
+                self.placeView?.subtitleLabel?.text = result
+            }
+
+        }
+        let handler = VNImageRequestHandler(cgImage: image.cgImage!)
+        
+        guard (try? handler.perform([request])) != nil else {
+            fatalError("Error on model")
+        }
+    }
+    
+    func predictHeatMap(image: UIImage) {
+
+        guard let visionModel = try? VNCoreMLModel(for: EstimationModel().model) else {
+            fatalError("Something went wrong")
+        }
+
+        let request = VNCoreMLRequest(model: visionModel) { request, error in
+            if let observations = request.results as? [VNCoreMLFeatureValueObservation],
+                let heatmaps = observations.first?.featureValue.multiArrayValue {
+                
+                // convert heatmap to Array<Array<Double>>
+                let heatmap3D = self.postProcessor.convertTo2DArray(from: heatmaps)
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.heatmapView.heatmap3D = heatmap3D
+
+                    
+                }
+                // must run on main thread
+            }
+        }
+
+        request.imageCropAndScaleOption = .scaleFill
+
+        let handler = VNImageRequestHandler(cgImage: image.cgImage!, orientation: image.convertImageOrientation())
+        try? handler.perform([request])
+    }
+    
+    func predictUsingVision(image: UIImage) {
+        guard let RN1015k500Model = try? VNCoreMLModel(for: RN1015k500Classifier.model) else {
+            fatalError("Something went wrong")
+        }
+
+        let request = VNCoreMLRequest(model: RN1015k500Model) { request, error in
+            if let observations = request.results as? [VNClassificationObservation] {
+                let top3 = observations.prefix(through: 2)
+                    .map { ($0.identifier, Double($0.confidence)) }
+                self.showResults(results: top3)
+            }
+        }
+
+        request.imageCropAndScaleOption = .centerCrop
+
+        let handler = VNImageRequestHandler(cgImage: image.cgImage!)
+        try? handler.perform([request])
+    }
+    
+}
+
+
+// MARK: - ClassificationServiceDelegate
+
+extension FirstViewController: ClassificationServiceDelegate {
+    func configureClassification(){
+        classificationService.delegate = self
+        classificationService.setup()
+        
+        soundClassifierModel = ESC_10_Sound_Classifier().model
+        
+    }
+    
+    func classificationService(_ service: ClassificationService, didDetectGender gender: String) {
+      DispatchQueue.main.async { [weak self] in
+          self?.genderView?.subtitleLabel?.text = gender
+      }
+    }
+
+    func classificationService(_ service: ClassificationService, didDetectAge age: String) {
+      DispatchQueue.main.async { [weak self] in
+          self?.ageView?.subtitleLabel?.text = age
+      }
+    }
+
+    func classificationService(_ service: ClassificationService, didDetectEmotion emotion: String) {
+      DispatchQueue.main.async { [weak self] in
+          self?.emotionView?.subtitleLabel?.text = emotion
+      }
+    }
+
+}
+
+// MARK: - Sound Analysis
+
+extension FirstViewController {
+
+    
+}
 
 
 // MARK: - UITextFieldDelegate
 
 extension FirstViewController: DSTextViewDelegate {
 
-       //MARK:- Delegate Methods of DSTextView
+       //MARK: Delegate Methods of DSTextView
     
         func dsTextViewDidChange(_ textView: UITextView) {
             print("Text Did Change")
@@ -181,4 +562,278 @@ extension FirstViewController: DSTextViewDelegate {
     
 }
 
+// MARK: - PhotoSourceControllerDelegate
 
+extension FirstViewController: PhotoSourceControllerDelegate, UINavigationControllerDelegate {
+    
+    public func photoSourceController(_ controller: PhotoSourceController, didSelectSourceType sourceType: UIImagePickerController.SourceType) {
+      let imagePicker = UIImagePickerController()
+      imagePicker.delegate = self
+      imagePicker.allowsEditing = true
+      imagePicker.sourceType = sourceType
+      present(imagePicker, animated: true)
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate
+
+
+extension FirstViewController: UIImagePickerControllerDelegate {
+    
+      public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        var editedImage : UIImage!
+        
+        if let image = info[.editedImage] as? UIImage {
+            editedImage = image
+        }else if let image = info[.originalImage] as? UIImage {
+            editedImage = image
+        }
+      
+        guard let image = editedImage, let ciImage = CIImage(image: image) else {
+            print("Can't analyze selected photo")
+            return
+        }
+
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.snappedImageView?.image = image
+            self?.mainImageView?.image = image
+        }
+        
+      picker.dismiss(animated: true)
+
+      // Run Core ML classifier
+      DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+        self?.classificationService.classify(image: ciImage)
+        self?.updateClassifications(for: image)
+        self?.predictUsingVision(image: image)
+        self?.processImage(image: image)
+        self?.predictHeatMap(image: image)
+        self?.recognizePlace(image: image)
+
+      }
+    }
+    
+}
+
+// MARK: - FDSoundActivatedRecorderDelegate
+
+extension FirstViewController: FDSoundActivatedRecorderDelegate {
+    /// A recording was triggered or manually started
+    func soundActivatedRecorderDidStartRecording(_ recorder: FDSoundActivatedRecorder) {
+        micButton?.tintColor = UIColor.red
+        progressView.progressTintColor = UIColor.red
+
+    }
+    
+    /// No recording has started or been completed after listening for `TOTAL_TIMEOUT_SECONDS`
+    func soundActivatedRecorderDidTimeOut(_ recorder: FDSoundActivatedRecorder) {
+        micButton?.tintColor = UIColor.link
+        progressView.progressTintColor = UIColor.link
+
+    }
+    
+    /// The recording and/or listening ended and no recording was captured
+    func soundActivatedRecorderDidAbort(_ recorder: FDSoundActivatedRecorder) {
+        micButton?.tintColor = UIColor.link
+        progressView.progressTintColor = UIColor.link
+
+    }
+    
+    /// A recording was successfully captured
+    func soundActivatedRecorderDidFinishRecording(_ recorder: FDSoundActivatedRecorder, andSaved file: URL) {
+        micButton?.tintColor = UIColor.link
+        progressView.progressTintColor = UIColor.link
+
+        print("soundActivatedRecorderDidFinishRecording \(file)")
+
+        savedURL = file
+    }
+    
+    @IBAction func pressedStartListening() {
+        print("pressedStartListening")
+        resetGraph()
+
+        recorder.startListening()
+    }
+    
+    @IBAction func pressedStartRecording() {
+        print("pressedStartRecording")
+        resetGraph()
+
+        recorder.startRecording()
+    }
+    
+    @IBAction func pressedStopAndSaveRecording() {
+        print("pressedStopAndSaveRecording")
+        recorder.stopAndSaveRecording()
+    }
+    
+    @IBAction func pressedAbort() {
+        print("pressedAbort")
+        recorder.abort()
+    }
+    
+    @IBAction func pressedPlayBack() {
+        player = AVPlayer(url: savedURL!)
+        player.play()
+    }
+    
+    func resetGraph() {
+        sampleSquares.forEach { sampleSquare in
+            sampleSquare.removeFromSuperview()
+        }
+        sampleSquares = []
+    }
+}
+
+// MARK: - MapKit and Location
+
+extension FirstViewController: CLLocationManagerDelegate {
+    
+    func configureLocation(){
+      if (CLLocationManager.locationServicesEnabled()){
+           locationManager = CLLocationManager()
+           locationManager.delegate = self
+           locationManager.desiredAccuracy = kCLLocationAccuracyBest
+           locationManager.requestAlwaysAuthorization()
+           locationManager.startUpdatingLocation()
+       }
+    }
+    
+    func showResults(results: [Prediction]) {
+        var s: [String] = []
+        for (i, pred) in results.enumerated() {
+            let latLongArr = pred.0.components(separatedBy: "\t")
+            myLatitude = latLongArr[1]
+            myLongitude = latLongArr[2]
+            s.append(String(format: "%d: %@ %@ (%3.2f%%)", i + 1, myLatitude, myLongitude, pred.1 * 100))
+            places[i].title = String(i+1)
+            places[i].coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(myLatitude)!, longitude: CLLocationDegrees(myLongitude)!)
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.locationView?.subtitleLabel?.text = s.joined(separator: "\n")
+
+            // Map reset
+            self?.resetRegion()
+            // Center on first prediction
+            
+            if let coordinate = self?.places[0].coordinate {
+                self?.mapView.centerCoordinate = coordinate
+            }
+            
+            if let places = self?.places {
+                self?.mapView.addAnnotations(places)
+            }
+            // Show annotations for the predictions on the map
+            // Zoom map to fit all annotations
+            self?.zoomMapFitAnnotations()
+        }
+    }
+        
+
+    func zoomMapFitAnnotations() {
+        var zoomRect = MKMapRect.null
+        for annotation in mapView.annotations {
+            let annotationPoint = MKMapPoint(annotation.coordinate)
+            let pointRect = MKMapRect(x: annotationPoint.x, y: annotationPoint.y, width: 0, height: 0)
+            if (zoomRect.isNull) {
+                zoomRect = pointRect
+            } else {
+                zoomRect = zoomRect.union(pointRect)
+            }
+        }
+        self.mapView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50), animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations.last! as CLLocation
+
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+
+        self.mapView.setRegion(region, animated: true)
+       // locationView?.subtitleLabel?.text = "locations = \(location.coordinate.latitude) \(location.coordinate.longitude)"
+
+        print("Latitude \(location.coordinate.latitude) Longitude \(location.coordinate.longitude)")
+        
+        let geocoder = CLGeocoder()
+           geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+               if (error != nil){
+                   print("error in reverseGeocode")
+               }
+               let placemark = placemarks! as [CLPlacemark]
+               if placemark.count>0{
+                   let placemark = placemarks![0]
+                   print(placemark.locality!)
+                   print(placemark.administrativeArea!)
+                   print(placemark.country!)
+
+                   self.locationView?.subtitleLabel?.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+               }
+           }
+        locationManager.stopUpdatingLocation()
+
+    }
+
+    func resetRegion(){
+        let region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+        mapView.setRegion(region, animated: true)
+    }
+}
+
+
+// MARK: - Additional Classes
+
+extension UIImage {
+    func convertImageOrientation() -> CGImagePropertyOrientation  {
+        let cgiOrientations : [ CGImagePropertyOrientation ] = [
+            .up, .down, .left, .right, .upMirrored, .downMirrored, .leftMirrored, .rightMirrored
+        ]
+        return cgiOrientations[imageOrientation.rawValue]
+    }
+}
+
+class PredictionLocation: NSObject, MKAnnotation{
+    var identifier = "Prediction location"
+    var title: String?
+    var coordinate: CLLocationCoordinate2D
+    init(name:String,lat:CLLocationDegrees,long:CLLocationDegrees){
+        title = name
+        coordinate = CLLocationCoordinate2DMake(lat, long)
+    }
+}
+
+class PredictionLocationList: NSObject {
+    var place = [PredictionLocation]()
+    override init(){
+        place += [PredictionLocation(name:"1",lat: 0, long: 0)]
+        place += [PredictionLocation(name:"2",lat: 1, long: 1)]
+        place += [PredictionLocation(name:"3",lat: 2, long: 2)]
+    }
+}
+
+class SegmentView: UIView {
+    @IBOutlet weak var headerView: UIView? {
+        didSet {
+            headerView?.transformToCircle()
+        }
+    }
+    @IBOutlet weak var titleLabel: UILabel?
+    @IBOutlet weak var confidenceLabel: UILabel?
+    @IBOutlet weak var subtitleLabel: UILabel?
+}
+
+
+class FDSoundActivatedRecorderMock: FDSoundActivatedRecorder {
+    var intervalCallback: (Float)->() = {_ in}
+    
+    func interval(currentLevel: Float) {
+        self.intervalCallback(currentLevel);
+    }
+    
+    override init() {
+        super.init();
+    }
+}

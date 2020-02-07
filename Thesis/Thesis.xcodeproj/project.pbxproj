@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2EB428DC147D0DD5B467179C /* Pods_Thesis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68484B57BB907365EFFFE6B2 /* Pods_Thesis.framework */; };
 		58AC64C123EC96A8003F9F13 /* DSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64C023EC96A7003F9F13 /* DSTextView.swift */; };
+		58AC64CC23EDC03C003F9F13 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CB23EDC03C003F9F13 /* Delegates.swift */; };
+		58AC64CE23EDC6EB003F9F13 /* ESC-10 Sound Classifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */; };
 		58DD113723EA4DD50004880F /* ThesisAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113623EA4DD50004880F /* ThesisAppDelegate.swift */; };
 		58DD113923EA4DD50004880F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113823EA4DD50004880F /* SceneDelegate.swift */; };
 		58DD113B23EA4DD50004880F /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113A23EA4DD50004880F /* FirstViewController.swift */; };
@@ -406,6 +408,8 @@
 		4B6CEF23077DD6703C0EBDED /* Pods-Thesis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thesis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Thesis/Pods-Thesis.debug.xcconfig"; sourceTree = "<group>"; };
 		53BEB1BE0B06DDEFABB8E6A8 /* Pods-Thesis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thesis.release.xcconfig"; path = "Pods/Target Support Files/Pods-Thesis/Pods-Thesis.release.xcconfig"; sourceTree = "<group>"; };
 		58AC64C023EC96A7003F9F13 /* DSTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSTextView.swift; sourceTree = "<group>"; };
+		58AC64CB23EDC03C003F9F13 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
+		58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "ESC-10 Sound Classifier.mlmodel"; sourceTree = "<group>"; };
 		58DD113323EA4DD50004880F /* Thesis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thesis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DD113623EA4DD50004880F /* ThesisAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThesisAppDelegate.swift; sourceTree = "<group>"; };
 		58DD113823EA4DD50004880F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -906,6 +910,7 @@
 				58DD154123EA6D3C0004880F /* Configuration.swift */,
 				58DD154223EA6D3C0004880F /* MLKit.swift */,
 				58DD113A23EA4DD50004880F /* FirstViewController.swift */,
+				58AC64CB23EDC03C003F9F13 /* Delegates.swift */,
 				58DD113C23EA4DD50004880F /* SecondViewController.swift */,
 				58DD152723EA6C4D0004880F /* AgeNet.mlmodel */,
 				58DD152223EA6C4C0004880F /* BERTQAFP16.mlmodel */,
@@ -923,6 +928,7 @@
 				58DD152C23EA6C4D0004880F /* SentimentPolarity.mlmodel */,
 				58DD153023EA6C4E0004880F /* SqueezeNet.mlmodel */,
 				58DD152423EA6C4D0004880F /* YOLOv3.mlmodel */,
+				58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */,
 				58DD114E23EA5A950004880F /* BaseSDK */,
 				58DD12A123EA5E850004880F /* Alpha Libraries */,
 				58DD11D723EA5D710004880F /* Libraries */,
@@ -2821,6 +2827,7 @@
 				58DD14AE23EA5E870004880F /* CGRect.swift in Sources */,
 				58DD145A23EA5E870004880F /* Logger.swift in Sources */,
 				58DD146B23EA5E870004880F /* ImageSizeFetcherOp.swift in Sources */,
+				58AC64CC23EDC03C003F9F13 /* Delegates.swift in Sources */,
 				58DD146123EA5E870004880F /* FloatingPanelBackdropView.swift in Sources */,
 				58DD13FA23EA5E860004880F /* AnimationHelpers.swift in Sources */,
 				58DD146023EA5E870004880F /* FloatingPanelLayout.swift in Sources */,
@@ -2842,6 +2849,7 @@
 				58DD129923EA5D720004880F /* _LNWeakRef.m in Sources */,
 				58DD14D723EA5E870004880F /* DefaultConfiguration.swift in Sources */,
 				58DD128723EA5D720004880F /* IQUIView+Hierarchy.swift in Sources */,
+				58AC64CE23EDC6EB003F9F13 /* ESC-10 Sound Classifier.mlmodel in Sources */,
 				58DD11AE23EA5A950004880F /* AppDelegateKit.swift in Sources */,
 				58DD129323EA5D720004880F /* NSObject+AltKVC.m in Sources */,
 				58DD11A523EA5A950004880F /* CommonKit.swift in Sources */,
@@ -3084,7 +3092,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8A2KYN67G9;
+				DEVELOPMENT_TEAM = 588Q399ZBJ;
 				INFOPLIST_FILE = Thesis/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3108,7 +3116,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8A2KYN67G9;
+				DEVELOPMENT_TEAM = 588Q399ZBJ;
 				INFOPLIST_FILE = Thesis/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

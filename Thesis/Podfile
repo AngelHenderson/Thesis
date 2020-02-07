@@ -192,6 +192,7 @@ target "Thesis" do
   
   
   #Thesis Pods
+  pod "FDSoundActivatedRecorder"
   
   #Shadow
   #pod "ShadowView"
