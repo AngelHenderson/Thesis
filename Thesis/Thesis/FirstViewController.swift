@@ -52,7 +52,7 @@ class FirstViewController: UIViewController {
     
     //User Interface
     @IBOutlet weak var scrollView: UIScrollView?
-    @IBOutlet var snappedImageView: UIImageView?
+    @IBOutlet weak var snappedImageView: UIImageView?
     @IBOutlet weak var mainImageView: UIImageView?
     @IBOutlet weak var heatmapView: DrawingHeatmapView!
 
@@ -76,7 +76,8 @@ class FirstViewController: UIViewController {
     @IBOutlet var foodView: SegmentView?
     @IBOutlet var physicalView: SegmentView?
     @IBOutlet var placeView: SegmentView?
-    
+    @IBOutlet var soundAnalysisView: SegmentView?
+
     @IBOutlet var ageContainerView: UIView?
     @IBOutlet var genderContainerView: UIView?
     @IBOutlet var emotionContainerView: UIView?
@@ -88,6 +89,9 @@ class FirstViewController: UIViewController {
     @IBOutlet var foodContainerView: UIView?
     @IBOutlet var physicalContainerView: UIView?
     @IBOutlet var placeContainerView: UIView?
+    @IBOutlet var soundAnalysisContainerView: UIView?
+
+
     
     //TextView
     @IBOutlet weak var documentTextView: UITextView?
@@ -129,6 +133,11 @@ class FirstViewController: UIViewController {
     let RN1015k500Classifier = RN1015k500() //Location Prediction and Classification
     typealias EstimationModel = model_cpm  //PoseNet
     var postProcessor: HeatmapPostProcessor = HeatmapPostProcessor() //HeatMap
+    
+    // Deep Residual Learning for Image Recognition
+    // https://arxiv.org/abs/1512.03385
+    let resnetModel = Resnet50()
+    let mnistModel  = SimpleMnist()
     
     //Sound Analysis
     var soundClassifierModel: MLModel!
@@ -195,6 +204,8 @@ class FirstViewController: UIViewController {
 //        foodContainerView?.isHidden = true
 //        physicalContainerView?.isHidden = true
 //        placeContainerView?.isHidden = true
+//        soundAnalysisContainerView?.isHidden = true
+
     }
     
     func answerQuestion(){
@@ -430,11 +441,32 @@ extension FirstViewController {
             }
 
         }
-        let handler = VNImageRequestHandler(cgImage: image.cgImage!)
         
-        guard (try? handler.perform([request])) != nil else {
-            fatalError("Error on model")
-        }
+    }
+    
+    func ResNet50Prediction(ref: CVPixelBuffer) {
+         do {
+             
+             // prediction
+             let output = try resnetModel.prediction(image: ref)
+             
+             // sort classes by probability
+             let sorted = output.classLabelProbs.sorted(by: { (lhs, rhs) -> Bool in
+                 return lhs.value > rhs.value
+             })
+             
+            classificationView?.subtitleLabel2?.text = output.classLabel
+
+//             resultLabel.text = output.classLabel
+//             probsLabel.text  = "\(sorted[0].key): \(NSString(format: "%.2f", sorted[0].value))\n\(sorted[1].key): \(NSString(format: "%.2f", sorted[1].value))\n\(sorted[2].key): \(NSString(format: "%.2f", sorted[2].value))\n\(sorted[3].key): \(NSString(format: "%.2f", sorted[3].value))\n\(sorted[4].key): \(NSString(format: "%.2f", sorted[4].value))"
+//
+             print(output.classLabel)
+             print(output.classLabelProbs)
+             
+         } catch {
+             
+             print(error)
+         }
     }
     
     func predictHeatMap(image: UIImage) {
@@ -494,8 +526,8 @@ extension FirstViewController: ClassificationServiceDelegate {
         classificationService.delegate = self
         classificationService.setup()
         
-        soundClassifierModel = ESC_10_Sound_Classifier().model
-        
+        let soundClassifier = ESC_10_Sound_Classifier()
+        soundClassifierModel = soundClassifier.model
     }
     
     func classificationService(_ service: ClassificationService, didDetectGender gender: String) {
@@ -522,7 +554,40 @@ extension FirstViewController: ClassificationServiceDelegate {
 
 extension FirstViewController {
 
-    
+    func startAudioEngine(audioFileURL: URL) {
+            
+        // Create a new audio file analyzer.
+        do {
+            audioFileAnalyzer = try SNAudioFileAnalyzer(url: audioFileURL)
+        } catch {
+            print("audioFileAnalyzer \(error)")
+        }
+
+        print("audioFileAnalyzer Active")
+        // Create a new observer that will be notified of analysis results.
+        let resultsObserver = ResultsObserver()
+        
+        // Prepare a new request for the trained model.
+        do {
+            let request = try SNClassifySoundRequest(mlModel: soundClassifierModel)
+            try audioFileAnalyzer.add(request, withObserver: resultsObserver)
+
+        } catch {
+            print("SNClassifySoundRequest \(error)")
+        }
+        
+        // Analyze the audio data.
+        audioFileAnalyzer.analyze()
+        
+        //Update the UI
+        DispatchQueue.main.async {
+            print("AudioFileAnalyzer Prediction \(resultsObserver.classificationResult)")
+            let percent = String(format: "%.2f%%", resultsObserver.classificationConfidence)
+            self.soundAnalysisView?.subtitleLabel?.text = "Prediction: " + resultsObserver.classificationResult + " \(percent) confidence."
+        }
+            
+    }
+
 }
 
 
@@ -610,7 +675,10 @@ extension FirstViewController: UIImagePickerControllerDelegate {
         self?.processImage(image: image)
         self?.predictHeatMap(image: image)
         self?.recognizePlace(image: image)
-
+        
+        if let image = self?.snappedImageView?.image, let ref = image.bufferToPixelBuffer {
+            self?.ResNet50Prediction(ref: ref)
+        }
       }
     }
     
@@ -648,6 +716,10 @@ extension FirstViewController: FDSoundActivatedRecorderDelegate {
         print("soundActivatedRecorderDidFinishRecording \(file)")
 
         savedURL = file
+        
+        if let savedURL = savedURL {
+            startAudioEngine(audioFileURL: savedURL)
+        }
     }
     
     @IBAction func pressedStartListening() {
@@ -675,8 +747,10 @@ extension FirstViewController: FDSoundActivatedRecorderDelegate {
     }
     
     @IBAction func pressedPlayBack() {
-        player = AVPlayer(url: savedURL!)
-        player.play()
+        if let savedURL = savedURL {
+            player = AVPlayer(url: savedURL)
+            player.play()
+        }
     }
     
     func resetGraph() {
@@ -823,6 +897,12 @@ class SegmentView: UIView {
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var confidenceLabel: UILabel?
     @IBOutlet weak var subtitleLabel: UILabel?
+    
+    @IBOutlet weak var confidenceLabel2: UILabel?
+    @IBOutlet weak var subtitleLabel2: UILabel?
+    
+    @IBOutlet weak var confidenceLabel3: UILabel?
+    @IBOutlet weak var subtitleLabel3: UILabel?
 }
 
 

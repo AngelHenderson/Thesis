@@ -11,6 +11,8 @@
 		58AC64C123EC96A8003F9F13 /* DSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64C023EC96A7003F9F13 /* DSTextView.swift */; };
 		58AC64CC23EDC03C003F9F13 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CB23EDC03C003F9F13 /* Delegates.swift */; };
 		58AC64CE23EDC6EB003F9F13 /* ESC-10 Sound Classifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */; };
+		58AC64D023EDD6BD003F9F13 /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CF23EDD6BC003F9F13 /* Resnet50.mlmodel */; };
+		58AC64D223EDD775003F9F13 /* SimpleMnist.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64D123EDD775003F9F13 /* SimpleMnist.mlmodel */; };
 		58DD113723EA4DD50004880F /* ThesisAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113623EA4DD50004880F /* ThesisAppDelegate.swift */; };
 		58DD113923EA4DD50004880F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113823EA4DD50004880F /* SceneDelegate.swift */; };
 		58DD113B23EA4DD50004880F /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113A23EA4DD50004880F /* FirstViewController.swift */; };
@@ -410,6 +412,8 @@
 		58AC64C023EC96A7003F9F13 /* DSTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSTextView.swift; sourceTree = "<group>"; };
 		58AC64CB23EDC03C003F9F13 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "ESC-10 Sound Classifier.mlmodel"; sourceTree = "<group>"; };
+		58AC64CF23EDD6BC003F9F13 /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Resnet50.mlmodel; sourceTree = "<group>"; };
+		58AC64D123EDD775003F9F13 /* SimpleMnist.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SimpleMnist.mlmodel; sourceTree = "<group>"; };
 		58DD113323EA4DD50004880F /* Thesis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thesis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DD113623EA4DD50004880F /* ThesisAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThesisAppDelegate.swift; sourceTree = "<group>"; };
 		58DD113823EA4DD50004880F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -928,6 +932,8 @@
 				58DD152C23EA6C4D0004880F /* SentimentPolarity.mlmodel */,
 				58DD153023EA6C4E0004880F /* SqueezeNet.mlmodel */,
 				58DD152423EA6C4D0004880F /* YOLOv3.mlmodel */,
+				58AC64CF23EDD6BC003F9F13 /* Resnet50.mlmodel */,
+				58AC64D123EDD775003F9F13 /* SimpleMnist.mlmodel */,
 				58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */,
 				58DD114E23EA5A950004880F /* BaseSDK */,
 				58DD12A123EA5E850004880F /* Alpha Libraries */,
@@ -2757,6 +2763,7 @@
 				58DD144C23EA5E860004880F /* BERTOutput.swift in Sources */,
 				58DD11A823EA5A950004880F /* ReachabilityKit.swift in Sources */,
 				58DD13EB23EA5E860004880F /* CBTabBarButton.swift in Sources */,
+				58AC64D223EDD775003F9F13 /* SimpleMnist.mlmodel in Sources */,
 				58DD14DF23EA5E870004880F /* LineColorResolver.swift in Sources */,
 				58DD14B123EA5E870004880F /* CellType.swift in Sources */,
 				58DD145E23EA5E870004880F /* FloatingPanelView.swift in Sources */,
@@ -2850,6 +2857,7 @@
 				58DD14D723EA5E870004880F /* DefaultConfiguration.swift in Sources */,
 				58DD128723EA5D720004880F /* IQUIView+Hierarchy.swift in Sources */,
 				58AC64CE23EDC6EB003F9F13 /* ESC-10 Sound Classifier.mlmodel in Sources */,
+				58AC64D023EDD6BD003F9F13 /* Resnet50.mlmodel in Sources */,
 				58DD11AE23EA5A950004880F /* AppDelegateKit.swift in Sources */,
 				58DD129323EA5D720004880F /* NSObject+AltKVC.m in Sources */,
 				58DD11A523EA5A950004880F /* CommonKit.swift in Sources */,
