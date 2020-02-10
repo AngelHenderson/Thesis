@@ -15,6 +15,21 @@
 		58AC64D223EDD775003F9F13 /* SimpleMnist.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64D123EDD775003F9F13 /* SimpleMnist.mlmodel */; };
 		58AC64D423EDDC91003F9F13 /* GenderSoundClassification.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64D323EDDC91003F9F13 /* GenderSoundClassification.mlmodel */; };
 		58AC64D623EDE53C003F9F13 /* CatDogUpdatable.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64D523EDE53C003F9F13 /* CatDogUpdatable.mlmodel */; };
+		58AC651423F12B96003F9F13 /* GSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651123F12B95003F9F13 /* GSMessage.swift */; };
+		58AC651523F12B96003F9F13 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651223F12B95003F9F13 /* PriorityQueue.swift */; };
+		58AC651623F12B96003F9F13 /* ShowAndTell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651323F12B95003F9F13 /* ShowAndTell.swift */; };
+		58AC651923F12BB0003F9F13 /* keras_inception_step_good_without_label.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651723F12BA7003F9F13 /* keras_inception_step_good_without_label.mlmodel */; };
+		58AC651A23F12BB0003F9F13 /* keras_inception_lstm_good.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651823F12BAF003F9F13 /* keras_inception_lstm_good.mlmodel */; };
+		58AC652323F13047003F9F13 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651B23F13043003F9F13 /* Math.swift */; };
+		58AC652423F13047003F9F13 /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651C23F13044003F9F13 /* CVPixelBuffer+Helpers.swift */; };
+		58AC652523F13047003F9F13 /* Predictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651D23F13044003F9F13 /* Predictions.swift */; };
+		58AC652623F13047003F9F13 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651E23F13044003F9F13 /* Array.swift */; };
+		58AC652723F13047003F9F13 /* MultiArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651F23F13045003F9F13 /* MultiArray.swift */; };
+		58AC652823F13047003F9F13 /* NonMaxSuppression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC652023F13045003F9F13 /* NonMaxSuppression.swift */; };
+		58AC652923F13047003F9F13 /* MLMultiArray+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC652123F13046003F9F13 /* MLMultiArray+Image.swift */; };
+		58AC652A23F13047003F9F13 /* UIImage+CVPixelBuffer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC652223F13047003F9F13 /* UIImage+CVPixelBuffer2.swift */; };
+		58AC652C23F131ED003F9F13 /* word_counts.txt in Resources */ = {isa = PBXBuildFile; fileRef = 58AC652B23F131EC003F9F13 /* word_counts.txt */; };
+		58AC652E23F13DCE003F9F13 /* ReviewTextClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC652D23F13DCC003F9F13 /* ReviewTextClassifier.mlmodel */; };
 		58DD113723EA4DD50004880F /* ThesisAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113623EA4DD50004880F /* ThesisAppDelegate.swift */; };
 		58DD113923EA4DD50004880F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113823EA4DD50004880F /* SceneDelegate.swift */; };
 		58DD113B23EA4DD50004880F /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD113A23EA4DD50004880F /* FirstViewController.swift */; };
@@ -418,6 +433,21 @@
 		58AC64D123EDD775003F9F13 /* SimpleMnist.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SimpleMnist.mlmodel; sourceTree = "<group>"; };
 		58AC64D323EDDC91003F9F13 /* GenderSoundClassification.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GenderSoundClassification.mlmodel; sourceTree = "<group>"; };
 		58AC64D523EDE53C003F9F13 /* CatDogUpdatable.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = CatDogUpdatable.mlmodel; sourceTree = "<group>"; };
+		58AC651123F12B95003F9F13 /* GSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSMessage.swift; sourceTree = "<group>"; };
+		58AC651223F12B95003F9F13 /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
+		58AC651323F12B95003F9F13 /* ShowAndTell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowAndTell.swift; sourceTree = "<group>"; };
+		58AC651723F12BA7003F9F13 /* keras_inception_step_good_without_label.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = keras_inception_step_good_without_label.mlmodel; sourceTree = "<group>"; };
+		58AC651823F12BAF003F9F13 /* keras_inception_lstm_good.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = keras_inception_lstm_good.mlmodel; sourceTree = "<group>"; };
+		58AC651B23F13043003F9F13 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		58AC651C23F13044003F9F13 /* CVPixelBuffer+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helpers.swift"; sourceTree = "<group>"; };
+		58AC651D23F13044003F9F13 /* Predictions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Predictions.swift; sourceTree = "<group>"; };
+		58AC651E23F13044003F9F13 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		58AC651F23F13045003F9F13 /* MultiArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiArray.swift; sourceTree = "<group>"; };
+		58AC652023F13045003F9F13 /* NonMaxSuppression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonMaxSuppression.swift; sourceTree = "<group>"; };
+		58AC652123F13046003F9F13 /* MLMultiArray+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MLMultiArray+Image.swift"; sourceTree = "<group>"; };
+		58AC652223F13047003F9F13 /* UIImage+CVPixelBuffer2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CVPixelBuffer2.swift"; sourceTree = "<group>"; };
+		58AC652B23F131EC003F9F13 /* word_counts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = word_counts.txt; sourceTree = "<group>"; };
+		58AC652D23F13DCC003F9F13 /* ReviewTextClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ReviewTextClassifier.mlmodel; sourceTree = "<group>"; };
 		58DD113323EA4DD50004880F /* Thesis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Thesis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DD113623EA4DD50004880F /* ThesisAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThesisAppDelegate.swift; sourceTree = "<group>"; };
 		58DD113823EA4DD50004880F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -890,6 +920,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		58AC651023F12B95003F9F13 /* ShowAndTell */ = {
+			isa = PBXGroup;
+			children = (
+				58AC651123F12B95003F9F13 /* GSMessage.swift */,
+				58AC651223F12B95003F9F13 /* PriorityQueue.swift */,
+				58AC651323F12B95003F9F13 /* ShowAndTell.swift */,
+				58AC651E23F13044003F9F13 /* Array.swift */,
+				58AC651C23F13044003F9F13 /* CVPixelBuffer+Helpers.swift */,
+				58AC651B23F13043003F9F13 /* Math.swift */,
+				58AC652123F13046003F9F13 /* MLMultiArray+Image.swift */,
+				58AC651F23F13045003F9F13 /* MultiArray.swift */,
+				58AC652023F13045003F9F13 /* NonMaxSuppression.swift */,
+				58AC651D23F13044003F9F13 /* Predictions.swift */,
+				58AC652223F13047003F9F13 /* UIImage+CVPixelBuffer2.swift */,
+				58AC652B23F131EC003F9F13 /* word_counts.txt */,
+			);
+			path = ShowAndTell;
+			sourceTree = "<group>";
+		};
 		58DD112A23EA4DD40004880F = {
 			isa = PBXGroup;
 			children = (
@@ -935,11 +984,14 @@
 				58DD152D23EA6C4D0004880F /* Nudity.mlmodel */,
 				58DD152323EA6C4C0004880F /* RN1015k500.mlmodel */,
 				58DD152C23EA6C4D0004880F /* SentimentPolarity.mlmodel */,
+				58AC652D23F13DCC003F9F13 /* ReviewTextClassifier.mlmodel */,
 				58DD153023EA6C4E0004880F /* SqueezeNet.mlmodel */,
 				58DD152423EA6C4D0004880F /* YOLOv3.mlmodel */,
 				58AC64CF23EDD6BC003F9F13 /* Resnet50.mlmodel */,
 				58AC64D123EDD775003F9F13 /* SimpleMnist.mlmodel */,
 				58AC64D323EDDC91003F9F13 /* GenderSoundClassification.mlmodel */,
+				58AC651823F12BAF003F9F13 /* keras_inception_lstm_good.mlmodel */,
+				58AC651723F12BA7003F9F13 /* keras_inception_step_good_without_label.mlmodel */,
 				58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */,
 				58DD114E23EA5A950004880F /* BaseSDK */,
 				58DD12A123EA5E850004880F /* Alpha Libraries */,
@@ -1632,6 +1684,7 @@
 		58DD12A123EA5E850004880F /* Alpha Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				58AC651023F12B95003F9F13 /* ShowAndTell */,
 				58AC64C023EC96A7003F9F13 /* DSTextView.swift */,
 				58DD12A223EA5E850004880F /* BubbleTabBar */,
 				58DD12A623EA5E850004880F /* DocumentClassifier */,
@@ -2513,6 +2566,7 @@
 				58DD14C123EA5E870004880F /* SFText-LightItalic.otf in Resources */,
 				58DD11BA23EA5A950004880F /* AuthenticationViewController.xib in Resources */,
 				58DD14D223EA5E870004880F /* SFText-SemiboldItalic.otf in Resources */,
+				58AC652C23F131ED003F9F13 /* word_counts.txt in Resources */,
 				58DD149E23EA5E870004880F /* ele_white_cloud_12.png in Resources */,
 				58DD11CD23EA5A950004880F /* SettingCollectionViewCell.xib in Resources */,
 				58DD148A23EA5E870004880F /* ele_sunnyNightStar1.png in Resources */,
@@ -2702,6 +2756,7 @@
 				58DD14BB23EA5E870004880F /* ChartLegendsDelegate.swift in Sources */,
 				58DD129B23EA5D720004880F /* _LNPopupBase64Utils.m in Sources */,
 				58DD126923EA5D720004880F /* FloatingAction.swift in Sources */,
+				58AC651623F12B96003F9F13 /* ShowAndTell.swift in Sources */,
 				58AC64D623EDE53C003F9F13 /* CatDogUpdatable.mlmodel in Sources */,
 				58DD11BB23EA5A950004880F /* AuthKit.swift in Sources */,
 				58DD113B23EA4DD50004880F /* FirstViewController.swift in Sources */,
@@ -2730,10 +2785,12 @@
 				58DD11B723EA5A950004880F /* BaseCollectionViewController.swift in Sources */,
 				58DD154723EA6D3C0004880F /* Commons.swift in Sources */,
 				58DD140923EA5E860004880F /* UIImage+Size.swift in Sources */,
+				58AC652923F13047003F9F13 /* MLMultiArray+Image.swift in Sources */,
 				58DD127E23EA5D720004880F /* IQInvocation.swift in Sources */,
 				58DD143A23EA5E860004880F /* SparkView.swift in Sources */,
 				58AC64C123EC96A8003F9F13 /* DSTextView.swift in Sources */,
 				58DD129523EA5D720004880F /* LNPopupBar.m in Sources */,
+				58AC652523F13047003F9F13 /* Predictions.swift in Sources */,
 				58DD128F23EA5D720004880F /* LNPopupCustomBarViewController.m in Sources */,
 				58DD129423EA5D720004880F /* LNPopupLongPressGesutreRecognizer.m in Sources */,
 				58DD14AA23EA5E870004880F /* ChartLegend.swift in Sources */,
@@ -2762,6 +2819,7 @@
 				58DD144523EA5E860004880F /* ChartProgressBarDelegate.swift in Sources */,
 				58DD14DC23EA5E870004880F /* ParticleGenerator.swift in Sources */,
 				58DD11C723EA5A950004880F /* RequestNotificationPrompt.swift in Sources */,
+				58AC651A23F12BB0003F9F13 /* keras_inception_lstm_good.mlmodel in Sources */,
 				58DD13EE23EA5E860004880F /* ClassificationServiceProtocol.swift in Sources */,
 				58DD143623EA5E860004880F /* SparkTrajectoryFactory.swift in Sources */,
 				58DD11C323EA5A950004880F /* DoubleChoiceViewController.swift in Sources */,
@@ -2819,6 +2877,7 @@
 				58DD144223EA5E860004880F /* Bar.swift in Sources */,
 				58DD154823EA6D3C0004880F /* ClassificationService.swift in Sources */,
 				58DD126523EA5D720004880F /* MIBadgeButton.swift in Sources */,
+				58AC652623F13047003F9F13 /* Array.swift in Sources */,
 				58DD126F23EA5D720004880F /* BFPaperView.m in Sources */,
 				58DD140F23EA5E860004880F /* BiscuitAnimationController.swift in Sources */,
 				58DD14B023EA5E870004880F /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
@@ -2836,6 +2895,7 @@
 				58DD11CB23EA5A950004880F /* SettingCollectionViewCell.swift in Sources */,
 				58DD142A23EA5E860004880F /* ClassicSparkTrajectoryFactory.swift in Sources */,
 				58DD11A123EA5A950004880F /* FullSizeCollectionView.swift in Sources */,
+				58AC652723F13047003F9F13 /* MultiArray.swift in Sources */,
 				58DD11B023EA5A950004880F /* BasicCollectionViewCell.swift in Sources */,
 				58DD127D23EA5D720004880F /* IQUIView+IQKeyboardToolbar.swift in Sources */,
 				58DD153B23EA6C4E0004880F /* NamesDT.mlmodel in Sources */,
@@ -2848,8 +2908,10 @@
 				58DD146023EA5E870004880F /* FloatingPanelLayout.swift in Sources */,
 				58DD129A23EA5D720004880F /* UIViewController+LNPopupSupportPrivate.m in Sources */,
 				58DD140C23EA5E860004880F /* UIView+Shadow.swift in Sources */,
+				58AC651523F12B96003F9F13 /* PriorityQueue.swift in Sources */,
 				58DD11BD23EA5A950004880F /* AppStoreReviewKit.swift in Sources */,
 				58DD145723EA5E860004880F /* BoardCollectionViewCell.swift in Sources */,
+				58AC652423F13047003F9F13 /* CVPixelBuffer+Helpers.swift in Sources */,
 				58DD14D623EA5E870004880F /* Scene.swift in Sources */,
 				58DD128523EA5D720004880F /* IQUIViewController+Additions.swift in Sources */,
 				58DD127B23EA5D720004880F /* IQBarButtonItem.swift in Sources */,
@@ -2879,6 +2941,7 @@
 				58DD11AD23EA5A950004880F /* AppCoreKit.swift in Sources */,
 				58DD11C123EA5A950004880F /* MessageCenterTableViewCell.swift in Sources */,
 				58DD13FB23EA5E860004880F /* ForegroundView.swift in Sources */,
+				58AC651923F12BB0003F9F13 /* keras_inception_step_good_without_label.mlmodel in Sources */,
 				58DD11C423EA5A950004880F /* AppStoreReviewPrompt.swift in Sources */,
 				58DD11C523EA5A950004880F /* MessageCenterResetPrompt.swift in Sources */,
 				58DD141B23EA5E860004880F /* BatteryIndicator.swift in Sources */,
@@ -2886,6 +2949,7 @@
 				58DD11B323EA5A950004880F /* SectionHeaderCollectionViewCell.swift in Sources */,
 				58DD11A223EA5A950004880F /* NotificationKit.swift in Sources */,
 				58DD142723EA5E860004880F /* ParticleGenerators.swift in Sources */,
+				58AC651423F12B96003F9F13 /* GSMessage.swift in Sources */,
 				58DD14B323EA5E870004880F /* TextLabelChartLegendCell.swift in Sources */,
 				58DD13F123EA5E860004880F /* PhotoSource.swift in Sources */,
 				58DD11AB23EA5A950004880F /* UserKit.swift in Sources */,
@@ -2903,6 +2967,7 @@
 				58DD126A23EA5D720004880F /* TextFieldEffects.swift in Sources */,
 				58DD129D23EA5D720004880F /* TAOverlay.m in Sources */,
 				58DD14B623EA5E870004880F /* DefaultChartLegendCell.swift in Sources */,
+				58AC652823F13047003F9F13 /* NonMaxSuppression.swift in Sources */,
 				58DD144123EA5E860004880F /* TimeManager.swift in Sources */,
 				58DD141F23EA5E860004880F /* ToppingLabel.swift in Sources */,
 				58DD147023EA5E870004880F /* WHWeatherLightingView.m in Sources */,
@@ -2920,6 +2985,7 @@
 				58DD140423EA5E860004880F /* DrawingView.swift in Sources */,
 				58DD14D923EA5E870004880F /* Engine.swift in Sources */,
 				58DD113723EA4DD50004880F /* ThesisAppDelegate.swift in Sources */,
+				58AC652E23F13DCE003F9F13 /* ReviewTextClassifier.mlmodel in Sources */,
 				58DD129223EA5D720004880F /* LNChevronView.m in Sources */,
 				58DD142D23EA5E860004880F /* FountainFirework.swift in Sources */,
 				58DD143123EA5E860004880F /* ImageSparkViewFactory.swift in Sources */,
@@ -2938,6 +3004,7 @@
 				58DD146C23EA5E870004880F /* WHWeatherView.m in Sources */,
 				58DD153623EA6C4E0004880F /* model_cpm.mlmodel in Sources */,
 				58DD140223EA5E860004880F /* DayNightSwitch.swift in Sources */,
+				58AC652A23F13047003F9F13 /* UIImage+CVPixelBuffer2.swift in Sources */,
 				58DD143D23EA5E860004880F /* CGPoint+Extensions.swift in Sources */,
 				58DD140E23EA5E860004880F /* BiscuitDismissController.swift in Sources */,
 				58DD128823EA5D720004880F /* IQNSArray+Sort.swift in Sources */,
@@ -2957,6 +3024,7 @@
 				58DD146F23EA5E870004880F /* WHWeatherRainView.m in Sources */,
 				58DD140823EA5E860004880F /* UIView+Image.swift in Sources */,
 				58DD113923EA4DD50004880F /* SceneDelegate.swift in Sources */,
+				58AC652323F13047003F9F13 /* Math.swift in Sources */,
 				58DD11C823EA5A950004880F /* SingleChoiceWithImageViewController.swift in Sources */,
 				58DD142323EA5E860004880F /* Extensions.swift in Sources */,
 				58DD143423EA5E860004880F /* ImageSparkView.swift in Sources */,

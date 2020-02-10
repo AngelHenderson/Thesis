@@ -21,9 +21,42 @@ import ImageIO
 import CoreML
 import SoundAnalysis
 
+import Speech
+import NaturalLanguage
+
 
 
 class FirstViewController: UIViewController {
+    
+    //Language Frameworks
+    let tagger = NLTagger(tagSchemes: [.sentimentScore])
+
+    //Speech Frameworks
+    let speechAudioEngine = AVAudioEngine()
+    var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    var speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en_IN"))
+    var recognitionTask: SFSpeechRecognitionTask?
+    
+    var micOn : Bool = false{
+        didSet{
+            if micOn{
+                micButton?.image = UIImage(systemName: "mic.fill")
+                do{
+                    self.inputTextView.textView.text = ""
+                    try self.startRecording()
+                }catch(let error){
+                    print("error is \(error.localizedDescription)")
+                }
+            }
+            else{
+                if speechAudioEngine.isRunning {
+                    recognitionRequest?.endAudio()
+                    speechAudioEngine.stop()
+                }
+                micButton?.image = UIImage(systemName: "mic")
+            }
+        }
+    }
     
     //Map Frameworks
     @IBOutlet weak var mapView: MKMapView!
@@ -67,6 +100,16 @@ class FirstViewController: UIViewController {
     @IBOutlet weak var snappedImageView: UIImageView?
     @IBOutlet weak var mainImageView: UIImageView?
     @IBOutlet weak var heatmapView: DrawingHeatmapView!
+    
+    var objectSaliencyRequest = VNGenerateObjectnessBasedSaliencyImageRequest(completionHandler: nil)
+    var attentionSaliencyRequest = VNGenerateAttentionBasedSaliencyImageRequest(completionHandler: nil)
+
+    @IBOutlet weak var objectSegmentedView: UIView?
+    @IBOutlet weak var attentionSegmentedView: UIView?
+
+    @IBOutlet weak var objectSegmentedIV: UIImageView?
+    @IBOutlet weak var attentionSegmentedIV: UIImageView?
+    let workQueue = DispatchQueue(label: "VisionRequest", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
 
     lazy var percentFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -90,6 +133,8 @@ class FirstViewController: UIViewController {
     @IBOutlet var placeView: SegmentView?
     @IBOutlet var soundAnalysisView: SegmentView?
     @IBOutlet var catDogAnalysisView: SegmentView?
+    @IBOutlet var initialAssestmentAnalysisView: SegmentView?
+    @IBOutlet var recommendationAnalysisView: SegmentView?
 
     @IBOutlet var ageContainerView: UIView?
     @IBOutlet var genderContainerView: UIView?
@@ -105,11 +150,16 @@ class FirstViewController: UIViewController {
     @IBOutlet var soundAnalysisContainerView: UIView?
     @IBOutlet var catDogContainerView: UIView?
 
+    @IBOutlet var initialAssestmentContainerView: UIView?
+    @IBOutlet var recommendationContainerView: UIView?
 
     
     //TextView
     @IBOutlet weak var documentTextView: UITextView?
     @IBOutlet weak var inputTextView: DSTextView!
+    
+    
+    
     
     //Buttons
     @IBOutlet weak var answerButton: UIButton?
@@ -156,6 +206,11 @@ class FirstViewController: UIViewController {
     //Sound Analysis
     var soundClassifierModel: MLModel!
     var genderSoundClassifier = GenderSoundClassification()
+    
+    let showAndTell = ShowAndTell()
+
+    var reviewPredictor : NLModel?
+
 
     
     //On-Device Training
@@ -185,6 +240,9 @@ class FirstViewController: UIViewController {
         super.viewDidLoad()
         configureInterface()
         
+        getSpeechPermissions()
+
+        
         answerButton?.onTap { [weak self] in
             self?.answerQuestion()
         }
@@ -204,11 +262,12 @@ class FirstViewController: UIViewController {
             text.languageAnalysisMLKit(){ string in
                 self?.languageView?.subtitleLabel?.text = string
             }
+            
+            self?.predictReview(text: text)
         }
         
         
         do{
-        
             let fileManager = FileManager.default
             let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:true)
             let fileURL = documentDirectory.appendingPathComponent("CatDog.mlmodelc")
@@ -233,6 +292,11 @@ class FirstViewController: UIViewController {
         
         btnToggleClassLabel?.alpha = 0
 
+        guard SFSpeechRecognizer.authorizationStatus() == .authorized
+        else {
+            print("guard failed...")
+            return
+        }
             
     }
     
@@ -436,7 +500,7 @@ extension FirstViewController {
                 self.classificationView?.subtitleLabel?.text = "Nothing recognized."
              } else {
                  // Display top classifications ranked by confidence in the UI.
-                 let topClassifications = classifications.prefix(2)
+                 let topClassifications = classifications.prefix(3)
                  let descriptions = topClassifications.map { classification in
                      // Formats the classification for display; e.g. "(0.37) cliff, drop, drop-off".
 //                    return String(format: " %@ (%.2f)", classification.identifier, classification.confidence * 100)
@@ -456,6 +520,16 @@ extension FirstViewController {
 
     func predictSentiment(sentiment: Sentiment, text: String) {
         sentimentView?.subtitleLabel?.text = "\(sentiment.emoji) \(sentimentAnalysis(text: text))"
+    }
+    
+    func predictReview(text: String) {
+        do{
+            let reviewPredictor = try NLModel(mlModel: ReviewTextClassifier().model)
+            let label = reviewPredictor.predictedLabel(for: text)
+            recommendationAnalysisView?.subtitleLabel?.text = label ?? ""
+        }catch(let error){
+            print("error is \(error.localizedDescription)")
+        }
     }
 }
 
@@ -496,6 +570,78 @@ extension FirstViewController {
         
     }
     
+    func processImageSegmentationByObject(image: UIImage) {
+        guard let originalImage = image.cgImage else { return }
+        
+        workQueue.async {
+            let requestHandler = VNImageRequestHandler(cgImage: originalImage, options: [:])
+            do {
+                try requestHandler.perform([self.objectSaliencyRequest])
+                guard let results = self.objectSaliencyRequest.results?.first
+                    else{return}
+                
+                if let observation = results as? VNSaliencyImageObservation
+                {
+                    var unionOfSalientRegions = CGRect(x: 0, y: 0, width: 0, height: 0)
+                    let salientObjects = observation.salientObjects
+                    for salientObject in salientObjects ?? [] {
+                        unionOfSalientRegions = unionOfSalientRegions.union(salientObject.boundingBox)
+                    }
+                    
+                    if let ciimage = CIImage(image: image){
+                        let salientRect = VNImageRectForNormalizedRect(unionOfSalientRegions,Int(ciimage.extent.size.width),Int(ciimage.extent.size.height))
+                        let croppedImage = ciimage.cropped(to: salientRect)
+                        let thumbnail =  UIImage(ciImage:croppedImage)
+                        DispatchQueue.main.async {
+
+                            self.objectSegmentedIV?.image = thumbnail
+                        }
+                    }
+                }
+                
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func processImageSegmentationByAttention(image: UIImage) {
+        guard let originalImage = image.cgImage else { return }
+        
+        workQueue.async {
+            let requestHandler = VNImageRequestHandler(cgImage: originalImage, options: [:])
+            do {
+                try requestHandler.perform([self.attentionSaliencyRequest])
+                guard let results = self.attentionSaliencyRequest.results?.first
+                    else{return}
+                
+                if let observation = results as? VNSaliencyImageObservation
+                {
+                    var unionOfSalientRegions = CGRect(x: 0, y: 0, width: 0, height: 0)
+                    let salientObjects = observation.salientObjects
+                    for salientObject in salientObjects ?? [] {
+                        unionOfSalientRegions = unionOfSalientRegions.union(salientObject.boundingBox)
+                    }
+                    
+                    if let ciimage = CIImage(image: image){
+                        let salientRect = VNImageRectForNormalizedRect(unionOfSalientRegions,Int(ciimage.extent.size.width),Int(ciimage.extent.size.height))
+                        let croppedImage = ciimage.cropped(to: salientRect)
+                        let thumbnail =  UIImage(ciImage:croppedImage)
+                        DispatchQueue.main.async {
+
+                            self.attentionSegmentedIV?.image = thumbnail
+                        }
+                    }
+                }
+                
+            } catch {
+                print(error)
+            }
+        }
+    }
+
+
+    
     func recognizePlace(image: UIImage) {
 
         let model = try! VNCoreMLModel(for: GoogLeNetPlaces().model)
@@ -506,8 +652,13 @@ extension FirstViewController {
             
             DispatchQueue.main.async {
                 var result = ""
-                for classification in results {
-                    result += "\(classification.identifier) \(classification.confidence * 100)％\n"
+                
+                for classification in results.prefix(4) {
+                    let confidence = classification.confidence * 100.0
+
+                    let converted = String(format: "%f", confidence)
+
+                    result += "\(classification.identifier) \(converted)％\n"
                 }
                 print(result)
                 self.placeView?.subtitleLabel?.text = result
@@ -515,11 +666,14 @@ extension FirstViewController {
 
         }
         
+        let handler = VNImageRequestHandler(cgImage: image.cgImage!)
+        guard (try? handler.perform([request])) != nil else {
+            fatalError("Error on model")
+        }
     }
     
     func ResNet50Prediction(ref: CVPixelBuffer) {
          do {
-             
              // prediction
              let output = try resnetModel.prediction(image: ref)
              
@@ -528,17 +682,20 @@ extension FirstViewController {
                  return lhs.value > rhs.value
              })
              
-            classificationView?.subtitleLabel2?.text = output.classLabel
+            DispatchQueue.main.async { [weak self] in
+                 let topClassifications = sorted.prefix(3)
+                print("ResNet50Prediction topClassifications \(topClassifications)")
+                 let descriptions = topClassifications.map { (key: String, value: Double) in
+                    return "\(key): \(Int(value * 100))%"
+                 }
+                self?.classificationView?.subtitleLabel2?.text = descriptions.joined(separator: "\n")
+            }
 
-//             resultLabel.text = output.classLabel
-//             probsLabel.text  = "\(sorted[0].key): \(NSString(format: "%.2f", sorted[0].value))\n\(sorted[1].key): \(NSString(format: "%.2f", sorted[1].value))\n\(sorted[2].key): \(NSString(format: "%.2f", sorted[2].value))\n\(sorted[3].key): \(NSString(format: "%.2f", sorted[3].value))\n\(sorted[4].key): \(NSString(format: "%.2f", sorted[4].value))"
-//
-            print("ResNet50 Prediction")
+            print("\(sorted[0].key): \(NSString(format: "%.2f", sorted[0].value))\n\(sorted[1].key): \(NSString(format: "%.2f", sorted[1].value))\n\(sorted[2].key): \(NSString(format: "%.2f", sorted[2].value))\n\(sorted[3].key): \(NSString(format: "%.2f", sorted[3].value))\n\(sorted[4].key): \(NSString(format: "%.2f", sorted[4].value))")
              print(output.classLabel)
              print(output.classLabelProbs)
              
          } catch {
-             
              print(error)
          }
     }
@@ -611,6 +768,25 @@ extension FirstViewController {
             print("error is \(error.localizedDescription)")
         }
         return nil
+    }
+    
+    @IBAction func initalAssestment(image: UIImage) {
+//        let startTime = Date()
+        let results = showAndTell.predict(image: image, beamSize: 12, maxWordNumber: 30)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.initialAssestmentAnalysisView?.subtitleLabel?.text = ""
+//            GSMessage.showMessageAddedTo("Time elapsed：\(Date().timeIntervalSince(startTime) * 1000)ms", type: .info, options: nil, inView: self.view, inViewController: self)
+            self?.initialAssestmentAnalysisView?.subtitleLabel?.text = results.sorted(by: {$0.score > $1.score}).map({
+                var x = $0.readAbleSentence.suffix($0.readAbleSentence.count - 1)
+                if $0.sentence.last == Caption.endID {
+                    _ = x.removeLast()
+                }
+                return "\(x.joined(separator: " ").capitalizingFirstLetter()) \(Int(pow(2, $0.score) * 10000.0))%"
+                }).prefix(3).joined(separator: "\n\n")
+        }
+        
+
     }
     
     
@@ -815,12 +991,16 @@ extension FirstViewController: UIImagePickerControllerDelegate {
 
       // Run Core ML classifier
       DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+        self?.processImageSegmentationByObject(image: image)
+        self?.processImageSegmentationByAttention(image: image)
+        
         self?.classificationService.classify(image: ciImage)
         self?.updateClassifications(for: image)
         self?.predictUsingVision(image: image)
         self?.processImage(image: image)
         self?.predictHeatMap(image: image)
         self?.recognizePlace(image: image)
+        self?.initalAssestment(image: image)
         
         let animal = self?.animalPredict(image: image)
         DispatchQueue.main.async { [weak self] in
@@ -844,8 +1024,7 @@ extension FirstViewController: UIImagePickerControllerDelegate {
             
         }
 
-
-        if let ref = image.bufferToPixelBuffer {
+        if let resized = image.resize(size: CGSize(width: 224, height: 224)), let ref = resized.bufferToPixelBuffer{
             self?.ResNet50Prediction(ref: ref)
         }
       }
@@ -893,9 +1072,12 @@ extension FirstViewController: FDSoundActivatedRecorderDelegate {
     
     @IBAction func pressedStartListening() {
         print("pressedStartListening")
-        resetGraph()
+        
+        micOn = !micOn
 
-        recorder.startListening()
+//        resetGraph()
+//
+//        recorder.startListening()
     }
     
     @IBAction func pressedStartRecording() {
@@ -904,6 +1086,69 @@ extension FirstViewController: FDSoundActivatedRecorderDelegate {
 
         recorder.startRecording()
     }
+    
+    func startRecording() throws {
+
+        recognitionTask?.cancel()
+        self.recognitionTask = nil
+
+        let audioSession = AVAudioSession.sharedInstance()
+        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+        
+        let inputNode = speechAudioEngine.inputNode
+        inputNode.removeTap(onBus: 0)
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+            self.recognitionRequest?.append(buffer)
+        }
+        
+        speechAudioEngine.prepare()
+        try speechAudioEngine.start()
+        
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
+        recognitionRequest.shouldReportPartialResults = true
+
+        if #available(iOS 13, *) {
+            if speechRecognizer?.supportsOnDeviceRecognition ?? false{
+                recognitionRequest.requiresOnDeviceRecognition = true
+            }
+        }
+
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
+            if let result = result {
+                DispatchQueue.main.async {
+                    let transcribedString = result.bestTranscription.formattedString
+                    print("Speech Recognized: \(transcribedString)")
+                    self.inputTextView.placeholder = ""
+                    self.inputTextView.textView.text = (transcribedString)
+                }
+            }
+            
+            if error != nil {
+                self.speechAudioEngine.stop()
+                inputNode.removeTap(onBus: 0)
+                self.recognitionRequest = nil
+                self.recognitionTask = nil
+            }
+        }
+        
+    }
+    
+    func getSpeechPermissions(){
+        SFSpeechRecognizer.requestAuthorization{authStatus in
+            OperationQueue.main.addOperation {
+               switch authStatus {
+                    case .authorized:
+                        print("authorised..")
+                    default:
+                        print("none")
+               }
+            }
+        }
+    }
+
     
     @IBAction func pressedStopAndSaveRecording() {
         print("pressedStopAndSaveRecording")
@@ -944,13 +1189,36 @@ extension FirstViewController: CLLocationManagerDelegate {
        }
     }
     
+    
     func showResults(results: [Prediction]) {
         var s: [String] = []
         for (i, pred) in results.enumerated() {
             let latLongArr = pred.0.components(separatedBy: "\t")
             myLatitude = latLongArr[1]
             myLongitude = latLongArr[2]
+            
+            let location = CLLocation(latitude: CLLocationDegrees(myLatitude)!, longitude: CLLocationDegrees(myLongitude)!)
+
+            let geocoder = CLGeocoder()
+               geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                   if (error != nil){
+                       print("error in reverseGeocode")
+                   }
+                   let placemark = placemarks! as [CLPlacemark]
+                   if placemark.count>0{
+                       let placemark = placemarks![0]
+                        print("ReverseGeocode")
+
+                       print(placemark.locality!)
+                       print(placemark.administrativeArea!)
+                       print(placemark.country!)
+                       self.locationView?.subtitleLabel3?.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+
+//                       s.append(String(format: "%d: %@ %@ (%3.2f%%)", i + 1, placemark.administrativeArea!, placemark.country!, pred.1 * 100))
+                   }
+               }
             s.append(String(format: "%d: %@ %@ (%3.2f%%)", i + 1, myLatitude, myLongitude, pred.1 * 100))
+            
             places[i].title = String(i+1)
             places[i].coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(myLatitude)!, longitude: CLLocationDegrees(myLongitude)!)
         }
@@ -1013,7 +1281,7 @@ extension FirstViewController: CLLocationManagerDelegate {
                    print(placemark.administrativeArea!)
                    print(placemark.country!)
 
-                   self.locationView?.subtitleLabel?.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+                   self.locationView?.subtitleLabel2?.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
                }
            }
         locationManager.stopUpdatingLocation()
@@ -1130,7 +1398,7 @@ extension FirstViewController {
                                         
                                         self.updatableModel = self.loadModel(url: fileURL)
                             
-                                        showSuccessAlert(title: "On-Device Training", subtitle: "Memory System Updated")
+//                                        showSuccessAlert(title: "On-Device Training", subtitle: "Memory System Updated")
                                         DispatchQueue.main.async {
                                             self.btnTrainImages?.alpha = 0
                                             self.imageLabelDictionary = [:]
@@ -1216,4 +1484,20 @@ class FDSoundActivatedRecorderMock: FDSoundActivatedRecorder {
 enum Animal {
     case cat
     case dog
+}
+
+
+extension String {
+    func substring(_ from: Int) -> String {
+        let start = index(startIndex, offsetBy: from)
+        return String(self[start ..< endIndex])
+    }
+    
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
 }
