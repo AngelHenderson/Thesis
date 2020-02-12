@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2EB428DC147D0DD5B467179C /* Pods_Thesis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68484B57BB907365EFFFE6B2 /* Pods_Thesis.framework */; };
+		589BB92123F31B8700303C25 /* IMDBReviewClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 589BB92023F31B8700303C25 /* IMDBReviewClassifier.mlmodel */; };
+		589BB92523F45F6900303C25 /* MyActivityClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 589BB92423F45F6900303C25 /* MyActivityClassifier.mlmodel */; };
+		589BB92E23F45F8F00303C25 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB92823F45F8E00303C25 /* MotionData.swift */; };
+		589BB92F23F45F8F00303C25 /* MLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB92A23F45F8E00303C25 /* MLManager.swift */; };
+		589BB93023F45F8F00303C25 /* CMMotionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB92C23F45F8F00303C25 /* CMMotionEngine.swift */; };
+		589BB93123F45F8F00303C25 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB92D23F45F8F00303C25 /* MotionManager.swift */; };
+		589BB93323F478C200303C25 /* SwiftTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB93223F478C200303C25 /* SwiftTimer.swift */; };
 		58AC64C123EC96A8003F9F13 /* DSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64C023EC96A7003F9F13 /* DSTextView.swift */; };
 		58AC64CC23EDC03C003F9F13 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CB23EDC03C003F9F13 /* Delegates.swift */; };
 		58AC64CE23EDC6EB003F9F13 /* ESC-10 Sound Classifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */; };
@@ -421,11 +428,26 @@
 		58DD154623EA6D3C0004880F /* MLKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD154223EA6D3C0004880F /* MLKit.swift */; };
 		58DD154723EA6D3C0004880F /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD154323EA6D3C0004880F /* Commons.swift */; };
 		58DD154823EA6D3C0004880F /* ClassificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD154423EA6D3C0004880F /* ClassificationService.swift */; };
+		58FB348723F1C11B008BB680 /* NaiveBayes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FB348623F1C11B008BB680 /* NaiveBayes.swift */; };
+		58FB348923F28AF0008BB680 /* StudentDogModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58FB348823F28AF0008BB680 /* StudentDogModel.mlmodel */; };
+		58FB348F23F28E34008BB680 /* ImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FB348B23F28E34008BB680 /* ImageClassifier.swift */; };
+		58FB349023F28E34008BB680 /* VideoClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FB348C23F28E34008BB680 /* VideoClassifier.swift */; };
+		58FB349123F28E34008BB680 /* ClassLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FB348D23F28E34008BB680 /* ClassLabel.swift */; };
+		58FB349223F28E34008BB680 /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FB348E23F28E34008BB680 /* Prediction.swift */; };
+		58FB349423F28E7E008BB680 /* UIImage+Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FB349323F28E7E008BB680 /* UIImage+Processing.swift */; };
+		58FB349623F29961008BB680 /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58FB349523F29961008BB680 /* Inceptionv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4B6CEF23077DD6703C0EBDED /* Pods-Thesis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thesis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Thesis/Pods-Thesis.debug.xcconfig"; sourceTree = "<group>"; };
 		53BEB1BE0B06DDEFABB8E6A8 /* Pods-Thesis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Thesis.release.xcconfig"; path = "Pods/Target Support Files/Pods-Thesis/Pods-Thesis.release.xcconfig"; sourceTree = "<group>"; };
+		589BB92023F31B8700303C25 /* IMDBReviewClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = IMDBReviewClassifier.mlmodel; sourceTree = "<group>"; };
+		589BB92423F45F6900303C25 /* MyActivityClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MyActivityClassifier.mlmodel; sourceTree = "<group>"; };
+		589BB92823F45F8E00303C25 /* MotionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionData.swift; sourceTree = "<group>"; };
+		589BB92A23F45F8E00303C25 /* MLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLManager.swift; sourceTree = "<group>"; };
+		589BB92C23F45F8F00303C25 /* CMMotionEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMMotionEngine.swift; sourceTree = "<group>"; };
+		589BB92D23F45F8F00303C25 /* MotionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
+		589BB93223F478C200303C25 /* SwiftTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftTimer.swift; sourceTree = "<group>"; };
 		58AC64C023EC96A7003F9F13 /* DSTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSTextView.swift; sourceTree = "<group>"; };
 		58AC64CB23EDC03C003F9F13 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "ESC-10 Sound Classifier.mlmodel"; sourceTree = "<group>"; };
@@ -895,6 +917,14 @@
 		58DD154223EA6D3C0004880F /* MLKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLKit.swift; sourceTree = "<group>"; };
 		58DD154323EA6D3C0004880F /* Commons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commons.swift; sourceTree = "<group>"; };
 		58DD154423EA6D3C0004880F /* ClassificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassificationService.swift; sourceTree = "<group>"; };
+		58FB348623F1C11B008BB680 /* NaiveBayes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NaiveBayes.swift; sourceTree = "<group>"; };
+		58FB348823F28AF0008BB680 /* StudentDogModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = StudentDogModel.mlmodel; sourceTree = "<group>"; };
+		58FB348B23F28E34008BB680 /* ImageClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageClassifier.swift; sourceTree = "<group>"; };
+		58FB348C23F28E34008BB680 /* VideoClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoClassifier.swift; sourceTree = "<group>"; };
+		58FB348D23F28E34008BB680 /* ClassLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassLabel.swift; sourceTree = "<group>"; };
+		58FB348E23F28E34008BB680 /* Prediction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
+		58FB349323F28E7E008BB680 /* UIImage+Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Processing.swift"; sourceTree = "<group>"; };
+		58FB349523F29961008BB680 /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
 		68484B57BB907365EFFFE6B2 /* Pods_Thesis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Thesis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -918,6 +948,41 @@
 				53BEB1BE0B06DDEFABB8E6A8 /* Pods-Thesis.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		589BB92623F45F7800303C25 /* CoreActivity */ = {
+			isa = PBXGroup;
+			children = (
+				589BB92923F45F8E00303C25 /* ML */,
+				589BB92723F45F8D00303C25 /* Model */,
+				589BB92B23F45F8F00303C25 /* Motion */,
+			);
+			path = CoreActivity;
+			sourceTree = "<group>";
+		};
+		589BB92723F45F8D00303C25 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				589BB92823F45F8E00303C25 /* MotionData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		589BB92923F45F8E00303C25 /* ML */ = {
+			isa = PBXGroup;
+			children = (
+				589BB92A23F45F8E00303C25 /* MLManager.swift */,
+			);
+			path = ML;
+			sourceTree = "<group>";
+		};
+		589BB92B23F45F8F00303C25 /* Motion */ = {
+			isa = PBXGroup;
+			children = (
+				589BB92C23F45F8F00303C25 /* CMMotionEngine.swift */,
+				589BB92D23F45F8F00303C25 /* MotionManager.swift */,
+			);
+			path = Motion;
 			sourceTree = "<group>";
 		};
 		58AC651023F12B95003F9F13 /* ShowAndTell */ = {
@@ -970,29 +1035,33 @@
 				58AC64CB23EDC03C003F9F13 /* Delegates.swift */,
 				58DD113C23EA4DD50004880F /* SecondViewController.swift */,
 				58DD152723EA6C4D0004880F /* AgeNet.mlmodel */,
-				58AC64D523EDE53C003F9F13 /* CatDogUpdatable.mlmodel */,
 				58DD152223EA6C4C0004880F /* BERTQAFP16.mlmodel */,
+				58AC64D523EDE53C003F9F13 /* CatDogUpdatable.mlmodel */,
 				58DD152A23EA6C4D0004880F /* CNNEmotions.mlmodel */,
 				58DD152823EA6C4D0004880F /* DocumentClassification.mlmodel */,
+				58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */,
 				58DD152523EA6C4D0004880F /* Food101.mlmodel */,
 				58DD152923EA6C4D0004880F /* GenderNet.mlmodel */,
 				58DD152123EA6C4C0004880F /* GoogLeNetPlaces.mlmodel */,
+				58AC64D323EDDC91003F9F13 /* GenderSoundClassification.mlmodel */,
+				58FB349523F29961008BB680 /* Inceptionv3.mlmodel */,
+				589BB92023F31B8700303C25 /* IMDBReviewClassifier.mlmodel */,
+				58AC651823F12BAF003F9F13 /* keras_inception_lstm_good.mlmodel */,
+				58AC651723F12BA7003F9F13 /* keras_inception_step_good_without_label.mlmodel */,
 				58DD152E23EA6C4E0004880F /* MobileNet.mlmodel */,
 				58DD152623EA6C4D0004880F /* model_cpm.mlmodel */,
 				58DD152F23EA6C4E0004880F /* model_hourglass.mlmodel */,
 				58DD152B23EA6C4D0004880F /* NamesDT.mlmodel */,
 				58DD152D23EA6C4D0004880F /* Nudity.mlmodel */,
 				58DD152323EA6C4C0004880F /* RN1015k500.mlmodel */,
-				58DD152C23EA6C4D0004880F /* SentimentPolarity.mlmodel */,
 				58AC652D23F13DCC003F9F13 /* ReviewTextClassifier.mlmodel */,
-				58DD153023EA6C4E0004880F /* SqueezeNet.mlmodel */,
-				58DD152423EA6C4D0004880F /* YOLOv3.mlmodel */,
 				58AC64CF23EDD6BC003F9F13 /* Resnet50.mlmodel */,
+				58DD152C23EA6C4D0004880F /* SentimentPolarity.mlmodel */,
+				58DD153023EA6C4E0004880F /* SqueezeNet.mlmodel */,
 				58AC64D123EDD775003F9F13 /* SimpleMnist.mlmodel */,
-				58AC64D323EDDC91003F9F13 /* GenderSoundClassification.mlmodel */,
-				58AC651823F12BAF003F9F13 /* keras_inception_lstm_good.mlmodel */,
-				58AC651723F12BA7003F9F13 /* keras_inception_step_good_without_label.mlmodel */,
-				58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */,
+				58FB348823F28AF0008BB680 /* StudentDogModel.mlmodel */,
+				58DD152423EA6C4D0004880F /* YOLOv3.mlmodel */,
+				589BB92423F45F6900303C25 /* MyActivityClassifier.mlmodel */,
 				58DD114E23EA5A950004880F /* BaseSDK */,
 				58DD12A123EA5E850004880F /* Alpha Libraries */,
 				58DD11D723EA5D710004880F /* Libraries */,
@@ -1684,6 +1753,10 @@
 		58DD12A123EA5E850004880F /* Alpha Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				589BB93223F478C200303C25 /* SwiftTimer.swift */,
+				589BB92623F45F7800303C25 /* CoreActivity */,
+				58FB348A23F28E34008BB680 /* Classifier */,
+				58FB348623F1C11B008BB680 /* NaiveBayes.swift */,
 				58AC651023F12B95003F9F13 /* ShowAndTell */,
 				58AC64C023EC96A7003F9F13 /* DSTextView.swift */,
 				58DD12A223EA5E850004880F /* BubbleTabBar */,
@@ -2485,6 +2558,19 @@
 			path = Resolvers;
 			sourceTree = "<group>";
 		};
+		58FB348A23F28E34008BB680 /* Classifier */ = {
+			isa = PBXGroup;
+			children = (
+				58FB349323F28E7E008BB680 /* UIImage+Processing.swift */,
+				58FB348B23F28E34008BB680 /* ImageClassifier.swift */,
+				58FB348C23F28E34008BB680 /* VideoClassifier.swift */,
+				58FB348D23F28E34008BB680 /* ClassLabel.swift */,
+				58FB348E23F28E34008BB680 /* Prediction.swift */,
+			);
+			name = Classifier;
+			path = "../../../../../Downloads/ios-ml-dog-classifier-master/iOS/DogBreedPrediction/Model/Services/Classifier";
+			sourceTree = "<group>";
+		};
 		F03C7ED7723D17E8AC104257 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2757,12 +2843,14 @@
 				58DD129B23EA5D720004880F /* _LNPopupBase64Utils.m in Sources */,
 				58DD126923EA5D720004880F /* FloatingAction.swift in Sources */,
 				58AC651623F12B96003F9F13 /* ShowAndTell.swift in Sources */,
+				589BB92523F45F6900303C25 /* MyActivityClassifier.mlmodel in Sources */,
 				58AC64D623EDE53C003F9F13 /* CatDogUpdatable.mlmodel in Sources */,
 				58DD11BB23EA5A950004880F /* AuthKit.swift in Sources */,
 				58DD113B23EA4DD50004880F /* FirstViewController.swift in Sources */,
 				58DD141223EA5E860004880F /* State.swift in Sources */,
 				58DD144623EA5E860004880F /* LiveBufferVC.swift in Sources */,
 				58DD11CC23EA5A950004880F /* SettingsCollectionReusableView.swift in Sources */,
+				58FB348723F1C11B008BB680 /* NaiveBayes.swift in Sources */,
 				58DD14A723EA5E870004880F /* DrawingHeatmapView.swift in Sources */,
 				58DD153923EA6C4E0004880F /* GenderNet.mlmodel in Sources */,
 				58DD153423EA6C4E0004880F /* YOLOv3.mlmodel in Sources */,
@@ -2774,10 +2862,12 @@
 				58DD153A23EA6C4E0004880F /* CNNEmotions.mlmodel in Sources */,
 				58DD140523EA5E860004880F /* VideoCapture.swift in Sources */,
 				58DD127323EA5D720004880F /* NLSegmentControl.swift in Sources */,
+				58FB349423F28E7E008BB680 /* UIImage+Processing.swift in Sources */,
 				58DD11D623EA5A950004880F /* SharedWebCredentialsKit.swift in Sources */,
 				58DD14AB23EA5E870004880F /* DefaultShapeChartLegend.swift in Sources */,
 				58DD153123EA6C4E0004880F /* GoogLeNetPlaces.mlmodel in Sources */,
 				58DD145223EA5E860004880F /* ATAudioVisualizer.m in Sources */,
+				589BB92123F31B8700303C25 /* IMDBReviewClassifier.mlmodel in Sources */,
 				58DD11D323EA5A950004880F /* SegmentKit.swift in Sources */,
 				58DD14BC23EA5E870004880F /* MagicScannerViewController.m in Sources */,
 				58DD128C23EA5D720004880F /* OLEContainerScrollView.m in Sources */,
@@ -2855,6 +2945,7 @@
 				58DD154523EA6D3C0004880F /* Configuration.swift in Sources */,
 				58DD146623EA5E870004880F /* MLKitExtensions.swift in Sources */,
 				58DD141E23EA5E860004880F /* ToppingButton.swift in Sources */,
+				589BB92F23F45F8F00303C25 /* MLManager.swift in Sources */,
 				58DD144023EA5E860004880F /* PreviewView.swift in Sources */,
 				58DD14A623EA5E870004880F /* MovingAverageFilter.swift in Sources */,
 				58DD146423EA5E870004880F /* Filters.swift in Sources */,
@@ -2904,6 +2995,7 @@
 				58DD146B23EA5E870004880F /* ImageSizeFetcherOp.swift in Sources */,
 				58AC64CC23EDC03C003F9F13 /* Delegates.swift in Sources */,
 				58DD146123EA5E870004880F /* FloatingPanelBackdropView.swift in Sources */,
+				58FB349223F28E34008BB680 /* Prediction.swift in Sources */,
 				58DD13FA23EA5E860004880F /* AnimationHelpers.swift in Sources */,
 				58DD146023EA5E870004880F /* FloatingPanelLayout.swift in Sources */,
 				58DD129A23EA5D720004880F /* UIViewController+LNPopupSupportPrivate.m in Sources */,
@@ -2931,6 +3023,7 @@
 				58DD11AE23EA5A950004880F /* AppDelegateKit.swift in Sources */,
 				58DD129323EA5D720004880F /* NSObject+AltKVC.m in Sources */,
 				58DD11A523EA5A950004880F /* CommonKit.swift in Sources */,
+				589BB93023F45F8F00303C25 /* CMMotionEngine.swift in Sources */,
 				58DD145F23EA5E870004880F /* GrabberHandleView.swift in Sources */,
 				58DD144F23EA5E860004880F /* TokenizedString.swift in Sources */,
 				58DD142923EA5E860004880F /* ClassicFireworkController.swift in Sources */,
@@ -2948,12 +3041,16 @@
 				58DD13F023EA5E860004880F /* VideoCaptureService.swift in Sources */,
 				58DD11B323EA5A950004880F /* SectionHeaderCollectionViewCell.swift in Sources */,
 				58DD11A223EA5A950004880F /* NotificationKit.swift in Sources */,
+				58FB349123F28E34008BB680 /* ClassLabel.swift in Sources */,
+				589BB93123F45F8F00303C25 /* MotionManager.swift in Sources */,
 				58DD142723EA5E860004880F /* ParticleGenerators.swift in Sources */,
 				58AC651423F12B96003F9F13 /* GSMessage.swift in Sources */,
 				58DD14B323EA5E870004880F /* TextLabelChartLegendCell.swift in Sources */,
 				58DD13F123EA5E860004880F /* PhotoSource.swift in Sources */,
 				58DD11AB23EA5A950004880F /* UserKit.swift in Sources */,
+				58FB348923F28AF0008BB680 /* StudentDogModel.mlmodel in Sources */,
 				58DD126E23EA5D720004880F /* BFPaperButton.m in Sources */,
+				58FB348F23F28E34008BB680 /* ImageClassifier.swift in Sources */,
 				58DD14B923EA5E870004880F /* ChartLegendsView.swift in Sources */,
 				58DD11A623EA5A950004880F /* BehaviorKit.swift in Sources */,
 				58DD127723EA5D720004880F /* WaterfallLayout.swift in Sources */,
@@ -2988,6 +3085,7 @@
 				58AC652E23F13DCE003F9F13 /* ReviewTextClassifier.mlmodel in Sources */,
 				58DD129223EA5D720004880F /* LNChevronView.m in Sources */,
 				58DD142D23EA5E860004880F /* FountainFirework.swift in Sources */,
+				589BB92E23F45F8F00303C25 /* MotionData.swift in Sources */,
 				58DD143123EA5E860004880F /* ImageSparkViewFactory.swift in Sources */,
 				58DD153523EA6C4E0004880F /* Food101.mlmodel in Sources */,
 				58DD140A23EA5E860004880F /* ShadowView.swift in Sources */,
@@ -2997,6 +3095,7 @@
 				58DD153223EA6C4E0004880F /* BERTQAFP16.mlmodel in Sources */,
 				58DD127A23EA5D720004880F /* IQTitleBarButtonItem.swift in Sources */,
 				58DD14B823EA5E870004880F /* ChartLegendCell.swift in Sources */,
+				589BB93323F478C200303C25 /* SwiftTimer.swift in Sources */,
 				58DD11BC23EA5A950004880F /* AuthenticationViewController.swift in Sources */,
 				58DD128923EA5D720004880F /* OLEContainerScrollView+Swizzling.m in Sources */,
 				58DD13F323EA5E860004880F /* ImageClassificationController.swift in Sources */,
@@ -3014,6 +3113,7 @@
 				58DD143823EA5E860004880F /* Firework.swift in Sources */,
 				58DD13F523EA5E860004880F /* Geometry.swift in Sources */,
 				58DD146923EA5E870004880F /* ImageSizeFetcherParser.swift in Sources */,
+				58FB349023F28E34008BB680 /* VideoClassifier.swift in Sources */,
 				58DD13FE23EA5E860004880F /* RingGraph.swift in Sources */,
 				58DD127923EA5D720004880F /* IQPreviousNextView.swift in Sources */,
 				58DD128E23EA5D720004880F /* LNPopupController.m in Sources */,
@@ -3031,6 +3131,7 @@
 				58DD14DD23EA5E870004880F /* DistanceResolver.swift in Sources */,
 				58DD145C23EA5E870004880F /* FloatingPanelBehavior.swift in Sources */,
 				58DD126C23EA5D720004880F /* LNZSnapToCenterCollectionViewLayout.swift in Sources */,
+				58FB349623F29961008BB680 /* Inceptionv3.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
