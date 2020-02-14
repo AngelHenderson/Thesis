@@ -15,6 +15,9 @@
 		589BB93023F45F8F00303C25 /* CMMotionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB92C23F45F8F00303C25 /* CMMotionEngine.swift */; };
 		589BB93123F45F8F00303C25 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB92D23F45F8F00303C25 /* MotionManager.swift */; };
 		589BB93323F478C200303C25 /* SwiftTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB93223F478C200303C25 /* SwiftTimer.swift */; };
+		589BB93E23F496A400303C25 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB93523F496A400303C25 /* Math.swift */; };
+		589BB94123F496A400303C25 /* MLMultiArray+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB93823F496A400303C25 /* MLMultiArray+Utils.swift */; };
+		589BB94623F496A400303C25 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589BB93D23F496A400303C25 /* Utils.swift */; };
 		58AC64C123EC96A8003F9F13 /* DSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64C023EC96A7003F9F13 /* DSTextView.swift */; };
 		58AC64CC23EDC03C003F9F13 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CB23EDC03C003F9F13 /* Delegates.swift */; };
 		58AC64CE23EDC6EB003F9F13 /* ESC-10 Sound Classifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */; };
@@ -27,7 +30,6 @@
 		58AC651623F12B96003F9F13 /* ShowAndTell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651323F12B95003F9F13 /* ShowAndTell.swift */; };
 		58AC651923F12BB0003F9F13 /* keras_inception_step_good_without_label.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651723F12BA7003F9F13 /* keras_inception_step_good_without_label.mlmodel */; };
 		58AC651A23F12BB0003F9F13 /* keras_inception_lstm_good.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651823F12BAF003F9F13 /* keras_inception_lstm_good.mlmodel */; };
-		58AC652323F13047003F9F13 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651B23F13043003F9F13 /* Math.swift */; };
 		58AC652423F13047003F9F13 /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651C23F13044003F9F13 /* CVPixelBuffer+Helpers.swift */; };
 		58AC652523F13047003F9F13 /* Predictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651D23F13044003F9F13 /* Predictions.swift */; };
 		58AC652623F13047003F9F13 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC651E23F13044003F9F13 /* Array.swift */; };
@@ -44,7 +46,6 @@
 		58DD114023EA4DD50004880F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58DD113E23EA4DD50004880F /* Main.storyboard */; };
 		58DD114223EA4DD70004880F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58DD114123EA4DD70004880F /* Assets.xcassets */; };
 		58DD114523EA4DD70004880F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58DD114323EA4DD70004880F /* LaunchScreen.storyboard */; };
-		58DD114D23EA53530004880F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 58DD114C23EA53530004880F /* GoogleService-Info.plist */; };
 		58DD119E23EA5A950004880F /* WhatsNewKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD115123EA5A950004880F /* WhatsNewKit.swift */; };
 		58DD119F23EA5A950004880F /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD115323EA5A950004880F /* BackgroundView.swift */; };
 		58DD11A023EA5A950004880F /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD115423EA5A950004880F /* NavigationView.swift */; };
@@ -448,6 +449,15 @@
 		589BB92C23F45F8F00303C25 /* CMMotionEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMMotionEngine.swift; sourceTree = "<group>"; };
 		589BB92D23F45F8F00303C25 /* MotionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 		589BB93223F478C200303C25 /* SwiftTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftTimer.swift; sourceTree = "<group>"; };
+		589BB93523F496A400303C25 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		589BB93623F496A400303C25 /* GPT2ByteEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPT2ByteEncoder.swift; sourceTree = "<group>"; };
+		589BB93723F496A400303C25 /* BertForQuestionAnswering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BertForQuestionAnswering.swift; sourceTree = "<group>"; };
+		589BB93823F496A400303C25 /* MLMultiArray+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MLMultiArray+Utils.swift"; sourceTree = "<group>"; };
+		589BB93923F496A400303C25 /* SquadDataset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquadDataset.swift; sourceTree = "<group>"; };
+		589BB93A23F496A400303C25 /* BertTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BertTokenizer.swift; sourceTree = "<group>"; };
+		589BB93B23F496A400303C25 /* GPT2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPT2.swift; sourceTree = "<group>"; };
+		589BB93C23F496A400303C25 /* GPT2Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPT2Tokenizer.swift; sourceTree = "<group>"; };
+		589BB93D23F496A400303C25 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		58AC64C023EC96A7003F9F13 /* DSTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSTextView.swift; sourceTree = "<group>"; };
 		58AC64CB23EDC03C003F9F13 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		58AC64CD23EDC6EA003F9F13 /* ESC-10 Sound Classifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "ESC-10 Sound Classifier.mlmodel"; sourceTree = "<group>"; };
@@ -460,7 +470,6 @@
 		58AC651323F12B95003F9F13 /* ShowAndTell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowAndTell.swift; sourceTree = "<group>"; };
 		58AC651723F12BA7003F9F13 /* keras_inception_step_good_without_label.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = keras_inception_step_good_without_label.mlmodel; sourceTree = "<group>"; };
 		58AC651823F12BAF003F9F13 /* keras_inception_lstm_good.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = keras_inception_lstm_good.mlmodel; sourceTree = "<group>"; };
-		58AC651B23F13043003F9F13 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		58AC651C23F13044003F9F13 /* CVPixelBuffer+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helpers.swift"; sourceTree = "<group>"; };
 		58AC651D23F13044003F9F13 /* Predictions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Predictions.swift; sourceTree = "<group>"; };
 		58AC651E23F13044003F9F13 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -479,7 +488,6 @@
 		58DD114123EA4DD70004880F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		58DD114423EA4DD70004880F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		58DD114623EA4DD70004880F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		58DD114C23EA53530004880F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		58DD115123EA5A950004880F /* WhatsNewKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewKit.swift; sourceTree = "<group>"; };
 		58DD115323EA5A950004880F /* BackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		58DD115423EA5A950004880F /* NavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
@@ -985,6 +993,22 @@
 			path = Motion;
 			sourceTree = "<group>";
 		};
+		589BB93423F496A400303C25 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				589BB93523F496A400303C25 /* Math.swift */,
+				589BB93623F496A400303C25 /* GPT2ByteEncoder.swift */,
+				589BB93723F496A400303C25 /* BertForQuestionAnswering.swift */,
+				589BB93823F496A400303C25 /* MLMultiArray+Utils.swift */,
+				589BB93923F496A400303C25 /* SquadDataset.swift */,
+				589BB93A23F496A400303C25 /* BertTokenizer.swift */,
+				589BB93B23F496A400303C25 /* GPT2.swift */,
+				589BB93C23F496A400303C25 /* GPT2Tokenizer.swift */,
+				589BB93D23F496A400303C25 /* Utils.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		58AC651023F12B95003F9F13 /* ShowAndTell */ = {
 			isa = PBXGroup;
 			children = (
@@ -993,7 +1017,6 @@
 				58AC651323F12B95003F9F13 /* ShowAndTell.swift */,
 				58AC651E23F13044003F9F13 /* Array.swift */,
 				58AC651C23F13044003F9F13 /* CVPixelBuffer+Helpers.swift */,
-				58AC651B23F13043003F9F13 /* Math.swift */,
 				58AC652123F13046003F9F13 /* MLMultiArray+Image.swift */,
 				58AC651F23F13045003F9F13 /* MultiArray.swift */,
 				58AC652023F13045003F9F13 /* NonMaxSuppression.swift */,
@@ -1069,7 +1092,6 @@
 				58DD114123EA4DD70004880F /* Assets.xcassets */,
 				58DD114323EA4DD70004880F /* LaunchScreen.storyboard */,
 				58DD12A023EA5DFE0004880F /* BridgeHeader.h */,
-				58DD114C23EA53530004880F /* GoogleService-Info.plist */,
 				58DD114623EA4DD70004880F /* Info.plist */,
 			);
 			path = Thesis;
@@ -1753,6 +1775,7 @@
 		58DD12A123EA5E850004880F /* Alpha Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				589BB93423F496A400303C25 /* Sources */,
 				589BB93223F478C200303C25 /* SwiftTimer.swift */,
 				589BB92623F45F7800303C25 /* CoreActivity */,
 				58FB348A23F28E34008BB680 /* Classifier */,
@@ -2699,7 +2722,6 @@
 				58DD14BE23EA5E870004880F /* SFDisplay-Medium.otf in Resources */,
 				58DD11C923EA5A950004880F /* DoubleChoiceViewController.xib in Resources */,
 				58DD14CB23EA5E870004880F /* SFText-BoldItalic.otf in Resources */,
-				58DD114D23EA53530004880F /* GoogleService-Info.plist in Resources */,
 				58DD141C23EA5E860004880F /* battery_charging.pdf in Resources */,
 				58DD147623EA5E870004880F /* ele_sunnyNightWave1.png in Resources */,
 				58DD147723EA5E870004880F /* ele_sunnyBird5.png in Resources */,
@@ -2909,6 +2931,7 @@
 				58DD144523EA5E860004880F /* ChartProgressBarDelegate.swift in Sources */,
 				58DD14DC23EA5E870004880F /* ParticleGenerator.swift in Sources */,
 				58DD11C723EA5A950004880F /* RequestNotificationPrompt.swift in Sources */,
+				589BB94623F496A400303C25 /* Utils.swift in Sources */,
 				58AC651A23F12BB0003F9F13 /* keras_inception_lstm_good.mlmodel in Sources */,
 				58DD13EE23EA5E860004880F /* ClassificationServiceProtocol.swift in Sources */,
 				58DD143623EA5E860004880F /* SparkTrajectoryFactory.swift in Sources */,
@@ -3102,6 +3125,7 @@
 				58DD143023EA5E860004880F /* FountainSparkTrajectoryFactory.swift in Sources */,
 				58DD146C23EA5E870004880F /* WHWeatherView.m in Sources */,
 				58DD153623EA6C4E0004880F /* model_cpm.mlmodel in Sources */,
+				589BB93E23F496A400303C25 /* Math.swift in Sources */,
 				58DD140223EA5E860004880F /* DayNightSwitch.swift in Sources */,
 				58AC652A23F13047003F9F13 /* UIImage+CVPixelBuffer2.swift in Sources */,
 				58DD143D23EA5E860004880F /* CGPoint+Extensions.swift in Sources */,
@@ -3111,6 +3135,7 @@
 				58DD146223EA5E870004880F /* UIExtensions.swift in Sources */,
 				58DD11D423EA5A950004880F /* AnalyticsKit.swift in Sources */,
 				58DD143823EA5E860004880F /* Firework.swift in Sources */,
+				589BB94123F496A400303C25 /* MLMultiArray+Utils.swift in Sources */,
 				58DD13F523EA5E860004880F /* Geometry.swift in Sources */,
 				58DD146923EA5E870004880F /* ImageSizeFetcherParser.swift in Sources */,
 				58FB349023F28E34008BB680 /* VideoClassifier.swift in Sources */,
@@ -3124,7 +3149,6 @@
 				58DD146F23EA5E870004880F /* WHWeatherRainView.m in Sources */,
 				58DD140823EA5E860004880F /* UIView+Image.swift in Sources */,
 				58DD113923EA4DD50004880F /* SceneDelegate.swift in Sources */,
-				58AC652323F13047003F9F13 /* Math.swift in Sources */,
 				58DD11C823EA5A950004880F /* SingleChoiceWithImageViewController.swift in Sources */,
 				58DD142323EA5E860004880F /* Extensions.swift in Sources */,
 				58DD143423EA5E860004880F /* ImageSparkView.swift in Sources */,

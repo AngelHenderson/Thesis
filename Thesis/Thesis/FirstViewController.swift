@@ -12,6 +12,9 @@ import AVKit
 import AVFoundation
 import FDSoundActivatedRecorder
 
+import Firebase
+import CoreMedia
+
 import MapKit
 import CoreLocation
 
@@ -24,10 +27,53 @@ import SoundAnalysis
 import Speech
 import NaturalLanguage
 
+//import CoreActivity
+
 
 
 class FirstViewController: UIViewController {
     
+    var assestmentText: String? = ""
+    
+    var loggingArray: [String?] = []
+    
+    func updateLog(){
+        let reverse = Array(loggingArray.reversed())
+        print("AI Log \(reverse)")
+        
+        if reverse.indices.contains(0){
+            AIView?.subtitleLabel?.text = reverse[0]
+        }
+        if reverse.indices.contains(1){
+            AIView?.subtitleLabel2?.text = reverse[1]
+        }
+        if reverse.indices.contains(2){
+            AIView?.subtitleLabel3?.text = reverse[2]
+        }
+        if reverse.indices.contains(3){
+            AIView?.subtitleLabel4?.text = reverse[3]
+        }
+        if reverse.indices.contains(4){
+            AIView?.subtitleLabel5?.text = reverse[4]
+        }
+        if reverse.indices.contains(5){
+            AIView?.subtitleLabel6?.text = reverse[5]
+        }
+        if reverse.indices.contains(6){
+            AIView?.subtitleLabel7?.text = reverse[6]
+        }
+        if reverse.indices.contains(7){
+            AIView?.subtitleLabel8?.text = reverse[7]
+        }
+        if reverse.indices.contains(8){
+            AIView?.subtitleLabel9?.text = reverse[8]
+        }
+        if reverse.indices.contains(9){
+            AIView?.subtitleLabel10?.text = reverse[9]
+        }
+    }
+    var knowledgeArray: [String] = []
+
     //Language Frameworks
     let tagger = NLTagger(tagSchemes: [.sentimentScore])
 
@@ -97,6 +143,8 @@ class FirstViewController: UIViewController {
     
     //User Interface
     @IBOutlet weak var scrollView: UIScrollView?
+    @IBOutlet weak var segmentControl: UISegmentedControl?
+
     @IBOutlet weak var snappedImageView: UIImageView?
     @IBOutlet weak var mainImageView: UIImageView?
     @IBOutlet weak var heatmapView: DrawingHeatmapView!
@@ -104,8 +152,7 @@ class FirstViewController: UIViewController {
     var objectSaliencyRequest = VNGenerateObjectnessBasedSaliencyImageRequest(completionHandler: nil)
     var attentionSaliencyRequest = VNGenerateAttentionBasedSaliencyImageRequest(completionHandler: nil)
 
-    @IBOutlet weak var objectSegmentedView: UIView?
-    @IBOutlet weak var attentionSegmentedView: UIView?
+
 
     @IBOutlet weak var objectSegmentedIV: UIImageView?
     @IBOutlet weak var attentionSegmentedIV: UIImageView?
@@ -118,6 +165,10 @@ class FirstViewController: UIViewController {
         return formatter
     }()
     
+    
+    @IBOutlet var AIView: SegmentView?
+    @IBOutlet var AIContainerView: UIView?
+
     
     //AI Views
     @IBOutlet var ageView: SegmentView?
@@ -135,6 +186,7 @@ class FirstViewController: UIViewController {
     @IBOutlet var catDogAnalysisView: SegmentView?
     @IBOutlet var initialAssestmentAnalysisView: SegmentView?
     @IBOutlet var recommendationAnalysisView: SegmentView?
+    @IBOutlet var activityAnalysisView: SegmentView?
 
     @IBOutlet var ageContainerView: UIView?
     @IBOutlet var genderContainerView: UIView?
@@ -149,9 +201,16 @@ class FirstViewController: UIViewController {
     @IBOutlet var placeContainerView: UIView?
     @IBOutlet var soundAnalysisContainerView: UIView?
     @IBOutlet var catDogContainerView: UIView?
-
     @IBOutlet var initialAssestmentContainerView: UIView?
     @IBOutlet var recommendationContainerView: UIView?
+    @IBOutlet var activityContainerView: UIView?
+
+    @IBOutlet weak var objectSegmentedView: UIView?
+    @IBOutlet weak var attentionSegmentedView: UIView?
+    
+    @IBOutlet weak var analyzeTextView: UIStackView?
+    @IBOutlet weak var analyzeAudioView: UIStackView?
+    @IBOutlet weak var analyzeImageView: UIView?
 
     
     //TextView
@@ -163,7 +222,6 @@ class FirstViewController: UIViewController {
     
     //Buttons
     @IBOutlet weak var answerButton: UIButton?
-    @IBOutlet weak var knowledgeButton: UIButton?
     @IBOutlet weak var analyzeButton: UIButton?
     
     @IBOutlet weak var micButton: UIBarButtonItem?
@@ -175,6 +233,7 @@ class FirstViewController: UIViewController {
 
     //Classification Module
     public let classificationService: ClassificationService = ClassificationService.init()
+    private let classifier = ImageClassifier()
 
     lazy var classificationRequest: VNCoreMLRequest = {
         do {
@@ -202,7 +261,6 @@ class FirstViewController: UIViewController {
     // https://arxiv.org/abs/1512.03385
     let resnetModel = Resnet50()
     let mnistModel  = SimpleMnist()
-    
     //Sound Analysis
     var soundClassifierModel: MLModel!
     var genderSoundClassifier = GenderSoundClassification()
@@ -211,11 +269,24 @@ class FirstViewController: UIViewController {
 
     var reviewPredictor : NLModel?
 
-
+    //Activity
+    let motionManager = MotionManager()
+    let mlManager = MLManager()
     
     //On-Device Training
 
     var updatableModel : MLModel?
+    
+    // MARK: - ML Kit Vision Property
+    lazy var vision = Vision.vision()
+    lazy var faceDetector: VisionFaceDetector = { () -> VisionFaceDetector in
+        // Real-time contour detection of multiple faces
+        let options = VisionFaceDetectorOptions()
+        options.contourMode = .all
+        options.classificationMode = .all
+        
+        return vision.faceDetector(options: options)
+    }()
     
     @IBOutlet weak var btnTrainImages: UIButton?
     @IBOutlet weak var trainingImagesCount: UILabel?
@@ -239,13 +310,27 @@ class FirstViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureInterface()
+        hideAllSections()
         
         getSpeechPermissions()
 
-        
         answerButton?.onTap { [weak self] in
-            self?.answerQuestion()
+            if self?.segmentControl?.selectedSegmentIndex == 0 {
+                self?.answerQuestion()
+            }
+            else if self?.segmentControl?.selectedSegmentIndex == 1 {
+                self?.answerAssestmentQuestion()
+            }
+            else if self?.segmentControl?.selectedSegmentIndex == 2 {
+                self?.answerAssestmentQuestion()
+            }
         }
+        
+        
+//        knowledgeButton?.onTap { [weak self] in
+//            self?.answerAssestmentQuestion()
+//        }
+        
         
         photoButton?.onTap { [weak self] in
             self?.hideAllSections()
@@ -254,13 +339,30 @@ class FirstViewController: UIViewController {
         
         analyzeButton?.onTap { [weak self] in
             self?.hideAllSections()
+            self?.assestmentText = ""
             guard let text = self?.documentTextView?.text else {return}
+
+            self?.emotionContainerView?.isHidden = false
+            self?.topicContainerView?.isHidden = false
+            self?.languageContainerView?.isHidden = false
+            self?.sentimentContainerView?.isHidden = false
+
+            self?.soundAnalysisContainerView?.isHidden = false
+
+            self?.recommendationContainerView?.isHidden = false
+
+            self?.analyzeTextView?.isHidden = false
+            self?.analyzeAudioView?.isHidden = false
+            self?.analyzeImageView?.isHidden = true
+            
             self?.predictTopic(text)
             if let sentiment = self?.classificationService.predictSentiment(from: text){
                 self?.predictSentiment(sentiment: sentiment, text: text)
             }
             text.languageAnalysisMLKit(){ string in
                 self?.languageView?.subtitleLabel?.text = string
+                self?.loggingArray.append("Predicting Language (MLKit): \(string)")
+                self?.updateLog()
             }
             
             self?.predictReview(text: text)
@@ -322,18 +424,27 @@ class FirstViewController: UIViewController {
     // MARK: - Functions
     
     func hideAllSections(){
-//        ageContainerView?.isHidden = true
-//        genderContainerView?.isHidden = true
-//        emotionContainerView?.isHidden = true
-//        classificationContainerView?.isHidden = true
-//        topicContainerView?.isHidden = true
-//        languageContainerView?.isHidden = true
-//        locationContainerView?.isHidden = true
-//        sentimentContainerView?.isHidden = true
-//        foodContainerView?.isHidden = true
-//        physicalContainerView?.isHidden = true
-//        placeContainerView?.isHidden = true
-//        soundAnalysisContainerView?.isHidden = true
+        ageContainerView?.isHidden = true
+        genderContainerView?.isHidden = true
+        emotionContainerView?.isHidden = true
+        classificationContainerView?.isHidden = true
+        topicContainerView?.isHidden = true
+        languageContainerView?.isHidden = true
+        locationContainerView?.isHidden = true
+        sentimentContainerView?.isHidden = true
+        foodContainerView?.isHidden = true
+        physicalContainerView?.isHidden = true
+        placeContainerView?.isHidden = true
+        soundAnalysisContainerView?.isHidden = true
+        catDogContainerView?.isHidden = true
+        initialAssestmentContainerView?.isHidden = true
+        recommendationContainerView?.isHidden = true
+        objectSegmentedView?.isHidden = true
+        attentionSegmentedView?.isHidden = true
+        analyzeTextView?.isHidden = false
+        analyzeAudioView?.isHidden = true
+        analyzeImageView?.isHidden = true
+        activityAnalysisView?.isHidden = true
 
     }
     
@@ -345,6 +456,9 @@ class FirstViewController: UIViewController {
         let placeholder = inputTextView.placeholder
         inputTextView.placeholder = "Searching..."
         inputTextView.textView.text = ""
+        
+        self.loggingArray.append("Analyzing question (Reasoning Module): \(searchText)")
+        self.updateLog()
 
         // Run the search in the background to keep the UI responsive.
         DispatchQueue.global(qos: .userInitiated).async {
@@ -354,6 +468,10 @@ class FirstViewController: UIViewController {
             // Update the UI on the main queue.
             DispatchQueue.main.async {
                 if answer.base == document.body, let textView = self.documentTextView {
+
+                    self.loggingArray.append("Analyzing Body (Reasoning Module): \(answer.base)")
+                    self.updateLog()
+                    
                     // Highlight the answer substring in the original text.
                     let semiTextColor = UIColor(named: "Semi Text Color")!
                     let mutableAttributedText = NSMutableAttributedString(string: document.body,attributes: [.foregroundColor: semiTextColor, .font: UIFont.systemFont(ofSize: 15)])
@@ -365,11 +483,41 @@ class FirstViewController: UIViewController {
                     textView.attributedText = mutableAttributedText
                 }
                 
+                self.loggingArray.append("Setting Answer (Reasoning Module): \(String(answer))")
+                self.updateLog()
+                
                 self.inputTextView.textView.text = String(answer)
                 self.inputTextView.placeholder = placeholder
             }
         }
     }
+    
+    func answerAssestmentQuestion(){
+        print("assestmentText: \(assestmentText)")
+
+        guard let assestmentText = assestmentText else {
+            self.documentTextView?.text = "I need more information"
+            return
+        }
+        
+
+        // Update UI to indicate the app is searching for an answer.
+        let searchText = inputTextView.textView.text ?? ""
+        let placeholder = inputTextView.placeholder
+        self.documentTextView?.text = ""
+
+        // Run the search in the background to keep the UI responsive.
+        DispatchQueue.global(qos: .userInitiated).async {
+            // Use the BERT model to search for the answer.
+            let answer = self.bert.findAnswer(for: searchText, in: assestmentText)
+            
+            // Update the UI on the main queue.
+            DispatchQueue.main.async {
+                self.documentTextView?.text = String(answer)
+            }
+        }
+    }
+    
     
     // MARK: - User Interface
     
@@ -418,10 +566,10 @@ class FirstViewController: UIViewController {
         
 //        soundAnalyzer = SNAudioStreamAnalyzer(format: inputFormat)
 
-        recorder.delegate = self
-        recorder.addObserver(self, forKeyPath: "microphoneLevel", options:.new, context: nil)
-        recorder.intervalCallback = {currentLevel in self.drawSample(currentLevel: currentLevel)}
-        recorder.microphoneLevelSilenceThreshold = -60
+//        recorder.delegate = self
+//        recorder.addObserver(self, forKeyPath: "microphoneLevel", options:.new, context: nil)
+//        recorder.intervalCallback = {currentLevel in self.drawSample(currentLevel: currentLevel)}
+//        recorder.microphoneLevelSilenceThreshold = -60
         
         let audioSession = AVAudioSession.sharedInstance()
         _ = try? audioSession.setCategory(.playAndRecord)
@@ -497,6 +645,7 @@ extension FirstViewController {
              let classifications = results as! [VNClassificationObservation]
          
              if classifications.isEmpty {
+                self.assestmentText?.append("No classifications were found.")
                 self.classificationView?.subtitleLabel?.text = "Nothing recognized."
              } else {
                  // Display top classifications ranked by confidence in the UI.
@@ -504,10 +653,15 @@ extension FirstViewController {
                  let descriptions = topClassifications.map { classification in
                      // Formats the classification for display; e.g. "(0.37) cliff, drop, drop-off".
 //                    return String(format: " %@ (%.2f)", classification.identifier, classification.confidence * 100)
+                    
                     return "\(classification.identifier) \(Int(classification.confidence * 100))%"
 
                  }
+                
+                self.assestmentText?.append("There were classifications found which includes \(descriptions.joined(separator: " ")). ")
                 self.classificationView?.subtitleLabel?.text = descriptions.joined(separator: "\n")
+                self.loggingArray.append("Classifying objects (MobileNet): \(descriptions.joined(separator: " "))")
+                self.updateLog()
              }
          }
      }
@@ -519,14 +673,25 @@ extension FirstViewController {
 extension FirstViewController {
 
     func predictSentiment(sentiment: Sentiment, text: String) {
+        self.assestmentText?.append("The sentiment that I predict for this is \(sentiment.emoji) \(sentimentAnalysis(text: text)).")
+
         sentimentView?.subtitleLabel?.text = "\(sentiment.emoji) \(sentimentAnalysis(text: text))"
+        self.loggingArray.append("Predicting sentiment of text (MLKit) \(sentiment.emoji) \(sentimentAnalysis(text: text))")
+        updateLog()
+
     }
     
     func predictReview(text: String) {
         do{
             let reviewPredictor = try NLModel(mlModel: ReviewTextClassifier().model)
-            let label = reviewPredictor.predictedLabel(for: text)
-            recommendationAnalysisView?.subtitleLabel?.text = label ?? ""
+            if let label = reviewPredictor.predictedLabel(for: text){
+                self.assestmentText?.append("My recommendation and prediction for the review is that it is going to be \(label). ")
+                recommendationAnalysisView?.subtitleLabel?.text = label
+                self.loggingArray.append("Predicting recommendation: \(recommendationAnalysisView?.subtitleLabel?.text ?? "")")
+                updateLog()
+            }
+
+
         }catch(let error){
             print("error is \(error.localizedDescription)")
         }
@@ -540,7 +705,12 @@ extension FirstViewController {
         guard let classification = documentClassifier.classify(text) else { return }
         let prediction = classification.prediction
         guard let percent = percentFormatter.string(from: NSNumber(value: prediction.probability)) else { return }
+        self.assestmentText?.append("My predict that the topic of this content is \(prediction.category.rawValue) with a confidence of \(percent). ")
+
         topicView?.subtitleLabel?.text = prediction.category.rawValue + " " + "(\(percent))"
+        self.loggingArray.append("Classifying topic: \(topicView?.subtitleLabel?.text ?? "")")
+        updateLog()
+
     }
 }
 
@@ -566,6 +736,9 @@ extension FirstViewController {
         print("Food Classifications \(result.classLabel) (\(converted)%)")
         DispatchQueue.main.async {
             self.foodView?.subtitleLabel?.text = "\(result.classLabel) (\(converted)%)"
+            self.loggingArray.append("Classifying food through Food101:  \(self.foodView?.subtitleLabel?.text ?? "")")
+            self.updateLog()
+
         }
         
     }
@@ -593,7 +766,8 @@ extension FirstViewController {
                         let croppedImage = ciimage.cropped(to: salientRect)
                         let thumbnail =  UIImage(ciImage:croppedImage)
                         DispatchQueue.main.async {
-
+                            self.loggingArray.append("Performing Object Based Saliency")
+                            self.updateLog()
                             self.objectSegmentedIV?.image = thumbnail
                         }
                     }
@@ -628,7 +802,8 @@ extension FirstViewController {
                         let croppedImage = ciimage.cropped(to: salientRect)
                         let thumbnail =  UIImage(ciImage:croppedImage)
                         DispatchQueue.main.async {
-
+                            self.loggingArray.append("Performing Attention Based Saliency")
+                            self.updateLog()
                             self.attentionSegmentedIV?.image = thumbnail
                         }
                     }
@@ -640,6 +815,39 @@ extension FirstViewController {
         }
     }
 
+    func squeezeNetPrediction(image: UIImage) {
+
+        let model = try! VNCoreMLModel(for: SqueezeNet().model)
+        let request = VNCoreMLRequest(model: model) { (request, error) in
+            guard let results = request.results as? [VNClassificationObservation] else {
+                fatalError("Results Error")
+            }
+            
+            DispatchQueue.main.async {
+                var result = ""
+                
+                for classification in results.prefix(4) {
+                    let confidence = classification.confidence * 100.0
+
+                    let converted = String(format: "%f", confidence)
+
+                    result += "\(classification.identifier) \(converted)％\n"
+                }
+                print(result)
+                self.assestmentText?.append("The objects I see in the following scene is \(result). ")
+                self.classificationView?.subtitleLabel4?.text = result
+                self.loggingArray.append("Classifying objects (SqueezeNet): \(self.classificationView?.subtitleLabel4?.text ?? "")")
+                self.updateLog()
+                
+            }
+
+        }
+        
+        let handler = VNImageRequestHandler(cgImage: image.cgImage!)
+        guard (try? handler.perform([request])) != nil else {
+            fatalError("Error on model")
+        }
+    }
 
     
     func recognizePlace(image: UIImage) {
@@ -661,9 +869,11 @@ extension FirstViewController {
                     result += "\(classification.identifier) \(converted)％\n"
                 }
                 print(result)
+                self.assestmentText?.append("The objects I see in the following scene is \(result). ")
                 self.placeView?.subtitleLabel?.text = result
+                self.loggingArray.append("Analyzing surrounding (GoogleNET): \(self.placeView?.subtitleLabel?.text ?? "")")
+                self.updateLog()
             }
-
         }
         
         let handler = VNImageRequestHandler(cgImage: image.cgImage!)
@@ -689,6 +899,10 @@ extension FirstViewController {
                     return "\(key): \(Int(value * 100))%"
                  }
                 self?.classificationView?.subtitleLabel2?.text = descriptions.joined(separator: "\n")
+                self?.assestmentText?.append("The image classifications I see in the following image is \(descriptions.joined(separator: " ")). ")
+                self?.loggingArray.append("Classifying objects (ResNet50):\(descriptions.joined(separator: " "))")
+                self?.updateLog()
+
             }
 
             print("\(sorted[0].key): \(NSString(format: "%.2f", sorted[0].value))\n\(sorted[1].key): \(NSString(format: "%.2f", sorted[1].value))\n\(sorted[2].key): \(NSString(format: "%.2f", sorted[2].value))\n\(sorted[3].key): \(NSString(format: "%.2f", sorted[3].value))\n\(sorted[4].key): \(NSString(format: "%.2f", sorted[4].value))")
@@ -698,6 +912,66 @@ extension FirstViewController {
          } catch {
              print(error)
          }
+    }
+    
+    func inceptionPrediction(image: UIImage) {
+         UIGraphicsBeginImageContextWithOptions(CGSize(width: 299, height: 299), true, 2.0)
+         image.draw(in: CGRect(x: 0, y: 0, width: 299, height: 299))
+         
+         let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+         UIGraphicsEndImageContext()
+         
+         let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue, kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue] as CFDictionary
+         var pixelBuffer : CVPixelBuffer?
+         
+         let status = CVPixelBufferCreate(kCFAllocatorDefault, Int(newImage.size.width), Int(newImage.size.height), kCVPixelFormatType_32ARGB, attrs, &pixelBuffer)
+         
+         guard (status == kCVReturnSuccess) else {return}
+         
+         CVPixelBufferLockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
+         let pixelData = CVPixelBufferGetBaseAddress(pixelBuffer!)
+         
+         let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+         let context = CGContext(data: pixelData, width: Int(newImage.size.width), height: Int(newImage.size.height), bitsPerComponent: 8, bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuffer!), space: rgbColorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue) //3
+         
+         context?.translateBy(x: 0, y: newImage.size.height)
+         context?.scaleBy(x: 1.0, y: -1.0)
+         
+         UIGraphicsPushContext(context!)
+         newImage.draw(in: CGRect(x: 0, y: 0, width: newImage.size.width, height: newImage.size.height))
+         UIGraphicsPopContext()
+         CVPixelBufferUnlockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
+         
+         
+         guard let prediction = try? Inceptionv3().prediction(image: pixelBuffer!) else {return}
+         // sort classes by probability
+         let sorted = prediction.classLabelProbs.sorted(by: { (lhs, rhs) -> Bool in
+             return lhs.value > rhs.value
+         })
+
+         
+        DispatchQueue.main.async {  [weak self] in
+             let topClassifications = sorted.prefix(3)
+             let descriptions = topClassifications.map { (key: String, value: Double) in
+                return "\(key): \(Int(value * 100))%"
+             }
+            self?.classificationView?.subtitleLabel3?.text = descriptions.joined(separator: "\n")
+            self?.loggingArray.append("Classifying objects (InceptionV3): \(self?.classificationView?.subtitleLabel3?.text ?? "")")
+            self?.updateLog()
+//            self.classificationView?.subtitleLabel3?.text = "I think this is a \(prediction.classLabel)"
+        }
+    }
+    
+    func predictMotionActivity() {
+        motionManager.getMotionData(){ [weak self] data in
+            guard let self = self else { return }
+            self.mlManager.handleMotionDataAndPredict(motionData: data, classification: { [weak self] classification in
+                guard let self = self else { return }
+                self.activityAnalysisView?.subtitleLabel?.text = classification
+                self.loggingArray.append("Predicting activity (ActivityNet): \(self.activityAnalysisView?.subtitleLabel?.text ?? "")")
+                self.updateLog()
+            })
+        }
     }
     
     func predictHeatMap(image: UIImage) {
@@ -758,6 +1032,8 @@ extension FirstViewController {
             let featureProviderDict = try MLDictionaryFeatureProvider(dictionary: ["image" : featureValue])
             let prediction = try updatableModel?.prediction(from: featureProviderDict)
             let value = prediction?.featureValue(for: "classLabel")?.stringValue
+            self.assestmentText?.append("The animal I see in the image \(value). ")
+
             if value == "Dog"{
                 return .dog
             }
@@ -770,13 +1046,13 @@ extension FirstViewController {
         return nil
     }
     
-    @IBAction func initalAssestment(image: UIImage) {
+    func initalAssestment(image: UIImage) {
 //        let startTime = Date()
-        let results = showAndTell.predict(image: image, beamSize: 12, maxWordNumber: 30)
+        let results = showAndTell.predict(image: image, beamSize: 8, maxWordNumber: 30)
         
         DispatchQueue.main.async { [weak self] in
             self?.initialAssestmentAnalysisView?.subtitleLabel?.text = ""
-//            GSMessage.showMessageAddedTo("Time elapsed：\(Date().timeIntervalSince(startTime) * 1000)ms", type: .info, options: nil, inView: self.view, inViewController: self)
+            
             self?.initialAssestmentAnalysisView?.subtitleLabel?.text = results.sorted(by: {$0.score > $1.score}).map({
                 var x = $0.readAbleSentence.suffix($0.readAbleSentence.count - 1)
                 if $0.sentence.last == Caption.endID {
@@ -784,11 +1060,95 @@ extension FirstViewController {
                 }
                 return "\(x.joined(separator: " ").capitalizingFirstLetter()) \(Int(pow(2, $0.score) * 10000.0))%"
                 }).prefix(3).joined(separator: "\n\n")
+            
+            
+            let assestment = results.sorted(by: {$0.score > $1.score}).map({
+            var x = $0.readAbleSentence.suffix($0.readAbleSentence.count - 1)
+            if $0.sentence.last == Caption.endID {
+                _ = x.removeLast()
+            }
+            return "\(x.joined(separator: " ").capitalizingFirstLetter()) \(Int(pow(2, $0.score) * 10000.0))%"
+            }).prefix(3).joined(separator: " ")
+            
+            self?.assestmentText?.append("My initial assestment of the scene is that \(assestment). ")
+            self?.loggingArray.append("Initial Assessment (ShowandTell):\(assestment)")
+            self?.updateLog()
         }
         
 
     }
     
+    func detectFaces(pixelBuffer: CVPixelBuffer) {
+        let ciimage: CIImage = CIImage(cvImageBuffer: pixelBuffer)
+        // crop found word
+        let ciContext = CIContext()
+        guard let cgImage: CGImage = ciContext.createCGImage(ciimage, from: ciimage.extent) else {return}
+        let uiImage: UIImage = UIImage(cgImage: cgImage)
+                        
+        
+        let request = VNDetectFaceRectanglesRequest { (req, err) in
+            
+            if let err = err {
+                print("Failed to detect faces:", err)
+                return
+            }
+            
+            print("Human faces count \(req.results?.count)")
+            
+            if req.results?.count == 0 {
+                DispatchQueue.main.async {
+                    print("Not human faces")
+                    self.catDogContainerView?.isHidden = false
+                    self.emotionContainerView?.isHidden = true
+                    self.ageContainerView?.isHidden = true
+                    self.genderContainerView?.isHidden = true
+                }
+            }
+            else {
+                print("Human faces")
+
+                DispatchQueue.main.async {
+                    self.emotionContainerView?.isHidden = false
+                    self.ageContainerView?.isHidden = false
+                    self.genderContainerView?.isHidden = false
+                    self.catDogContainerView?.isHidden = true
+                    self.foodContainerView?.isHidden = true
+                }
+                
+
+//                if let smilingProbability = faces.first?.smilingProbability {
+//                    self.emotionView?.subtitleLabel3?.text = "\(String(format: "%.2f", smilingProbability)) %"
+//                }
+//                else {
+//                    self.emotionView?.subtitleLabel3?.text = "Can Predict Smiling Probability"
+//                }
+            }
+            
+            req.results?.forEach({ (res) in
+
+            })
+        }
+        
+        DispatchQueue.global().async {
+            let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+            do {
+                try handler.perform([request])
+            } catch let reqErr {
+                print("Failed to perform request:", reqErr)
+            }
+        }
+                
+//        faceDetector.process(visionImage) { (features, error) in
+//            // this closure is called on main thread
+//            if error == nil, let faces: [VisionFace] = features {
+//
+//            }
+//            else {
+//
+//            }
+//        }
+    }
+
     
     
 }
@@ -808,18 +1168,30 @@ extension FirstViewController: ClassificationServiceDelegate {
     func classificationService(_ service: ClassificationService, didDetectGender gender: String) {
       DispatchQueue.main.async { [weak self] in
           self?.genderView?.subtitleLabel?.text = gender
+        self?.assestmentText?.append("The gender that I predict for the following object is \(gender). ")
+        self?.loggingArray.append("Gender prediction through sound analysis (SoundClassifer):\(gender)")
+        self?.updateLog()
+
       }
     }
 
     func classificationService(_ service: ClassificationService, didDetectAge age: String) {
       DispatchQueue.main.async { [weak self] in
           self?.ageView?.subtitleLabel?.text = age
+        self?.assestmentText?.append("The age that I predict for the following object is \(age). ")
+        self?.loggingArray.append("Age prediction (AgeNet):\(age)")
+        self?.updateLog()
+
       }
     }
 
     func classificationService(_ service: ClassificationService, didDetectEmotion emotion: String) {
       DispatchQueue.main.async { [weak self] in
           self?.emotionView?.subtitleLabel?.text = emotion
+          self?.assestmentText?.append("The emotion that I predict for the following object is \(emotion). ")
+        self?.loggingArray.append("Emotion prediction through CV (EmotionNet):\(emotion)")
+        self?.updateLog()
+
       }
     }
 
@@ -831,35 +1203,38 @@ extension FirstViewController {
 
     func startAudioEngine(audioFileURL: URL) {
             
-        // Create a new audio file analyzer.
-        do {
-            audioFileAnalyzer = try SNAudioFileAnalyzer(url: audioFileURL)
-        } catch {
-            print("audioFileAnalyzer \(error)")
-        }
-
-        print("audioFileAnalyzer Active")
-        // Create a new observer that will be notified of analysis results.
-        
-        // Prepare a new request for the trained model.
-        do {
-            let request = try SNClassifySoundRequest(mlModel: soundClassifierModel)
-            try audioFileAnalyzer.add(request, withObserver: resultsObserver)
-
-        } catch {
-            print("SNClassifySoundRequest \(error)")
-        }
-        
-        // Analyze the audio data.
-        audioFileAnalyzer.analyze()
-        
-        //Update the UI
-        DispatchQueue.main.async {
-            print("AudioFileAnalyzer Prediction \(self.resultsObserver.classificationResult)")
-            let percent = String(format: "%.2f%%", self.resultsObserver.classificationConfidence)
-            self.soundAnalysisView?.subtitleLabel?.text = "Prediction: " + self.resultsObserver.classificationResult + " \(percent) confidence."
-        }
-            
+//        // Create a new audio file analyzer.
+//        do {
+//            audioFileAnalyzer = try SNAudioFileAnalyzer(url: audioFileURL)
+//        } catch {
+//            print("audioFileAnalyzer \(error)")
+//        }
+//
+//        print("audioFileAnalyzer Active")
+//        // Create a new observer that will be notified of analysis results.
+//
+//        // Prepare a new request for the trained model.
+//        do {
+//            let request = try SNClassifySoundRequest(mlModel: soundClassifierModel)
+//            try audioFileAnalyzer.add(request, withObserver: resultsObserver)
+//
+//        } catch {
+//            print("SNClassifySoundRequest \(error)")
+//        }
+//
+//        // Analyze the audio data.
+//        audioFileAnalyzer.analyze()
+//
+//        //Update the UI
+//        DispatchQueue.main.async {
+//            print("AudioFileAnalyzer Prediction \(self.resultsObserver.classificationResult)")
+//            let percent = String(format: "%.2f%%", self.resultsObserver.classificationConfidence)
+//            self.soundAnalysisView?.subtitleLabel?.text = "Prediction: " + self.resultsObserver.classificationResult + " \(percent) confidence."
+//
+//            self.assestmentText?.append("I believe the sound I have been hearing in the background is  \(self.resultsObserver.classificationResult). ")
+//
+//        }
+//
     }
     
     func startAudioEngine() {
@@ -881,15 +1256,12 @@ extension FirstViewController {
             self.analysisQueue.async {
                 self.analyzer.analyze(buffer, atAudioFramePosition: time.sampleTime)
                 DispatchQueue.main.async {
-                    print("AudioFileAnalyzer Prediction \(self.resultsObserver.classificationResult)")
                     self.soundAnalysisView?.subtitleLabel?.text = "" + self.resultsObserver.classificationResult + " (\(Int(self.resultsObserver.classificationConfidence))%)"
 
-                    if self.resultsObserver.classificationConfidence > 0.99 {
-                        self.soundAnalysisView?.subtitleLabel?.textColor = .systemGreen
-                    }
-                    else {
-                        self.soundAnalysisView?.subtitleLabel?.textColor = .label
-                    }
+//                    self.assestmentText?.append("I believe the sound I have been hearing in the background is  \(self.resultsObserver.classificationResult). ")
+
+                    self.soundAnalysisView?.subtitleLabel?.textColor = .label
+
                     let percent = String(format: "%.2f%%", self.resultsObserver.classificationConfidence)
                     
                     
@@ -920,20 +1292,16 @@ extension FirstViewController: DSTextViewDelegate {
        //MARK: Delegate Methods of DSTextView
     
         func dsTextViewDidChange(_ textView: UITextView) {
-            print("Text Did Change")
         }
         
         func dsTextViewDidEndEditing(_ textView: UITextView) {
-            print("Text Did End")
             // The user pressed the `Search` button.
         }
         
         func dsTextViewDidBeginEditing(_ textView: UITextView) {
-            print("Text Did Begin Editing")
         }
         
         func dsTextViewCharactersCount(_ count: Int) {
-            print("Characters Count : \(count)")
         }
         
 
@@ -976,58 +1344,99 @@ extension FirstViewController: UIImagePickerControllerDelegate {
             editedImage = image
         }
       
-        guard let image = editedImage, let ciImage = CIImage(image: image) else {
+        guard let image = editedImage, let ciImage = CIImage(image: image), let cgImage = image.cgImage else {
             print("Can't analyze selected photo")
             return
         }
 
+        self.ageContainerView?.isHidden = false
+        self.genderContainerView?.isHidden = false
+        self.emotionContainerView?.isHidden = false
+        self.classificationContainerView?.isHidden = false
+        self.locationContainerView?.isHidden = false
+        self.sentimentContainerView?.isHidden = false
+        self.physicalContainerView?.isHidden = false
+        self.placeContainerView?.isHidden = false
+        self.foodContainerView?.isHidden = false
+        self.catDogContainerView?.isHidden = false
+        self.initialAssestmentContainerView?.isHidden = false
+//        self.objectSegmentedView?.isHidden = false
+//        self.attentionSegmentedView?.isHidden = false
+        self.analyzeImageView?.isHidden = false
+        
+        self.assestmentText = ""
+
         
         DispatchQueue.main.async { [weak self] in
+
             self?.snappedImageView?.image = image
             self?.mainImageView?.image = image
+            self?.loggingArray.removeAll()
+            self?.updateLog()
+            
+            // Run Core ML classifier
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                self?.processImageSegmentationByObject(image: image)
+                self?.processImageSegmentationByAttention(image: image)
+                self?.classificationService.classify(image: ciImage)
+                self?.updateClassifications(for: image)
+                self?.predictUsingVision(image: image)
+                self?.processImage(image: image)
+                self?.initalAssestment(image: image)
+                self?.recognizePlace(image: image)
+                self?.predictHeatMap(image: image)
+                self?.inceptionPrediction(image: image)
+                self?.predictMotionActivity()
+                self?.classifier.classifyImageWithVision(image: cgImage) { (results) in
+                    DispatchQueue.main.async {
+                        self?.catDogAnalysisView?.subtitleLabel2?.text = results
+                        self?.loggingArray.append("Animal Prediction CV (StudentDogModel):\(results)")
+                        self?.updateLog()
+                    }
+                }
+                
+                if let ref = image.bufferToPixelBuffer{
+                    self?.detectFaces(pixelBuffer: ref)
+                }
+
+
+                if let resized = image.resize(size: CGSize(width: 224, height: 224)){
+                    self?.squeezeNetPrediction(image: resized)
+                }
+
+                if let resized = image.resize(size: CGSize(width: 224, height: 224)), let ref = resized.bufferToPixelBuffer{
+                  self?.ResNet50Prediction(ref: ref)
+                }
+                
+              let animal = self?.animalPredict(image: image)
+              DispatchQueue.main.async { [weak self] in
+
+                  if let animal = animal{
+
+                      if animal == .dog{
+                          self?.predicatedClassLabel?.text = "Dog"
+                          self?.btnToggleClassLabel?.alpha = 1
+                          self?.btnToggleClassLabel?.tag = 0
+                          self?.btnToggleClassLabel?.setTitle("Assessment Incorrection: It's a Cat", for: .normal)
+                      }
+                      else if animal == .cat{
+                          self?.btnToggleClassLabel?.alpha = 1
+                          self?.predicatedClassLabel?.text = "Cat"
+                          self?.btnToggleClassLabel?.tag = 1
+                          self?.btnToggleClassLabel?.setTitle("Assessment Incorrection: It's a Dog!", for: .normal)
+                      }
+                  }
+                  else{
+                      self?.predicatedClassLabel?.text = "Neither dog nor cat."
+                  }
+                  
+              }
+                
+                
+            }
         }
         
       picker.dismiss(animated: true)
-
-      // Run Core ML classifier
-      DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-        self?.processImageSegmentationByObject(image: image)
-        self?.processImageSegmentationByAttention(image: image)
-        
-        self?.classificationService.classify(image: ciImage)
-        self?.updateClassifications(for: image)
-        self?.predictUsingVision(image: image)
-        self?.processImage(image: image)
-        self?.predictHeatMap(image: image)
-        self?.recognizePlace(image: image)
-        self?.initalAssestment(image: image)
-        
-        let animal = self?.animalPredict(image: image)
-        DispatchQueue.main.async { [weak self] in
-            if let animal = animal{
-                if animal == .dog{
-                    self?.predicatedClassLabel?.text = "Dog"
-                    self?.btnToggleClassLabel?.alpha = 1
-                    self?.btnToggleClassLabel?.tag = 0
-                    self?.btnToggleClassLabel?.setTitle("Assestment Incorrection: It's a Cat", for: .normal)
-                }
-                else if animal == .cat{
-                    self?.btnToggleClassLabel?.alpha = 1
-                    self?.predicatedClassLabel?.text = "Cat"
-                    self?.btnToggleClassLabel?.tag = 1
-                    self?.btnToggleClassLabel?.setTitle("Assestment Incorrection: It's a Dog!", for: .normal)
-                }
-            }
-            else{
-                self?.predicatedClassLabel?.text = "Neither dog nor cat."
-            }
-            
-        }
-
-        if let resized = image.resize(size: CGSize(width: 224, height: 224)), let ref = resized.bufferToPixelBuffer{
-            self?.ResNet50Prediction(ref: ref)
-        }
-      }
     }
     
 }
@@ -1181,11 +1590,13 @@ extension FirstViewController: CLLocationManagerDelegate {
     
     func configureLocation(){
       if (CLLocationManager.locationServicesEnabled()){
-           locationManager = CLLocationManager()
-           locationManager.delegate = self
-           locationManager.desiredAccuracy = kCLLocationAccuracyBest
-           locationManager.requestAlwaysAuthorization()
-           locationManager.startUpdatingLocation()
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+            locationManager.allowsBackgroundLocationUpdates = false
+            locationManager.pausesLocationUpdatesAutomatically = false
        }
     }
     
@@ -1204,18 +1615,29 @@ extension FirstViewController: CLLocationManagerDelegate {
                    if (error != nil){
                        print("error in reverseGeocode")
                    }
-                   let placemark = placemarks! as [CLPlacemark]
-                   if placemark.count>0{
-                       let placemark = placemarks![0]
-                        print("ReverseGeocode")
+                   else {
+                    
+                            
+                    let placemark = placemarks! as [CLPlacemark]
+                           if placemark.count>0{
+                               let placemark = placemarks![0]
+        //
+        //                       print(placemark.locality!)
+        //                       print(placemark.administrativeArea!)
+        //                       print(placemark.country!)
+                                if let locality = placemark.locality, let administrativeArea = placemark.administrativeArea, let country = placemark.country {
+                                   self.assestmentText?.append("I believe that my current location is \(locality), \(administrativeArea), \(country). ")
 
-                       print(placemark.locality!)
-                       print(placemark.administrativeArea!)
-                       print(placemark.country!)
-                       self.locationView?.subtitleLabel3?.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+                                    
+                                    self.locationView?.subtitleLabel3?.text = "\(locality), \(administrativeArea), \(country)"
+                                    self.loggingArray.append("Location Analysis (CoreLocation): \(locality), \(administrativeArea), \(country)")
+                                    self.updateLog()
 
-//                       s.append(String(format: "%d: %@ %@ (%3.2f%%)", i + 1, placemark.administrativeArea!, placemark.country!, pred.1 * 100))
-                   }
+                                }
+                            }
+                    }
+                
+                   
                }
             s.append(String(format: "%d: %@ %@ (%3.2f%%)", i + 1, myLatitude, myLongitude, pred.1 * 100))
             
@@ -1225,6 +1647,8 @@ extension FirstViewController: CLLocationManagerDelegate {
         
         DispatchQueue.main.async { [weak self] in
             self?.locationView?.subtitleLabel?.text = s.joined(separator: "\n")
+            self?.loggingArray.append("Location Prediction (RN1015k500): \(s.joined(separator: "\n"))")
+            self?.updateLog()
 
             // Map reset
             self?.resetRegion()
@@ -1268,23 +1692,39 @@ extension FirstViewController: CLLocationManagerDelegate {
        // locationView?.subtitleLabel?.text = "locations = \(location.coordinate.latitude) \(location.coordinate.longitude)"
 
         print("Latitude \(location.coordinate.latitude) Longitude \(location.coordinate.longitude)")
-        
+        locationManager.stopUpdatingLocation()
+
         let geocoder = CLGeocoder()
            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
                if (error != nil){
                    print("error in reverseGeocode")
+                //        locationManager.stopUpdatingLocation()
+
+                
+                return
                }
+                
+            
                let placemark = placemarks! as [CLPlacemark]
                if placemark.count>0{
                    let placemark = placemarks![0]
-                   print(placemark.locality!)
-                   print(placemark.administrativeArea!)
-                   print(placemark.country!)
+                    print("ReverseGeocode")
 
-                   self.locationView?.subtitleLabel2?.text = "\(placemark.locality!), \(placemark.administrativeArea!), \(placemark.country!)"
+                if let locality = placemark.locality, let administrativeArea = placemark.administrativeArea, let country = placemark.country {
+                   self.assestmentText?.append("I believe that my current location is \(locality), \(administrativeArea), \(country). ")
+
+                    
+                    self.locationView?.subtitleLabel2?.text = "\(locality), \(administrativeArea), \(country)"
+                    self.loggingArray.append("Location Analysis (CoreLocation): \(locality), \(administrativeArea), \(country)")
+                    self.updateLog()
+
+                }
+
+//                       s.append(String(format: "%d: %@ %@ (%3.2f%%)", i + 1, placemark.administrativeArea!, placemark.country!, pred.1 * 100))
                }
-           }
-        locationManager.stopUpdatingLocation()
+        }
+               
+           
 
     }
 
@@ -1292,6 +1732,32 @@ extension FirstViewController: CLLocationManagerDelegate {
         let region = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
         mapView.setRegion(region, animated: true)
     }
+}
+
+
+//MARK:- Naive Bayes
+
+extension FirstViewController {
+//    let golfData = [
+//        [0, 0, 0, 0],
+//        [0, 0, 0, 1],
+//        [1, 0, 0, 0],
+//        [2, 1, 0, 0],
+//        [2, 2, 1, 0],
+//        [2, 2, 1, 1],
+//        [1, 2, 1, 1],
+//        [0, 1, 0, 0],
+//        [0, 2, 1, 0],
+//        [2, 1, 1, 0],
+//        [0, 1, 1, 1],
+//        [1, 1, 0, 1],
+//        [1, 0, 1, 0],
+//        [2, 1, 0, 1]
+//    ]
+//    let golfClasses =  [0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0]
+//    let golfNaive = try! NaiveBayes(type: .multinomial, data: golfData, classes: golfClasses).train()
+//    let golfResult = golfNaive.classifyProba(with: [0, 2, 0, 1])
+
 }
 
 //MARK:- On-Device Training
@@ -1458,14 +1924,18 @@ class SegmentView: UIView {
         }
     }
     @IBOutlet weak var titleLabel: UILabel?
-    @IBOutlet weak var confidenceLabel: UILabel?
     @IBOutlet weak var subtitleLabel: UILabel?
-    
-    @IBOutlet weak var confidenceLabel2: UILabel?
     @IBOutlet weak var subtitleLabel2: UILabel?
-    
-    @IBOutlet weak var confidenceLabel3: UILabel?
     @IBOutlet weak var subtitleLabel3: UILabel?
+    @IBOutlet weak var subtitleLabel4: UILabel?
+    @IBOutlet weak var subtitleLabel5: UILabel?
+    @IBOutlet weak var subtitleLabel6: UILabel?
+    @IBOutlet weak var subtitleLabel7: UILabel?
+    @IBOutlet weak var subtitleLabel8: UILabel?
+    @IBOutlet weak var subtitleLabel9: UILabel?
+    @IBOutlet weak var subtitleLabel10: UILabel?
+
+
 }
 
 
@@ -1484,6 +1954,7 @@ class FDSoundActivatedRecorderMock: FDSoundActivatedRecorder {
 enum Animal {
     case cat
     case dog
+    
 }
 
 

@@ -270,6 +270,12 @@ extension MultiArray {
     return (bytes, width, height)
   }
 
+    public func clamp<T: Comparable>(_ x: T, min: T, max: T) -> T {
+      if x < min { return min }
+      if x > max { return max }
+      return x
+    }
+
   /**
    Converts the multi-array into an array of grayscale pixels.
 

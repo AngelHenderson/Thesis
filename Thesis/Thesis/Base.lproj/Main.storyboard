@@ -38,14 +38,22 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="SaY-5R-IAr">
-                                        <rect key="frame" x="16" y="0.0" width="382" height="5603.5"/>
+                                        <rect key="frame" x="16" y="0.0" width="382" height="5646.5"/>
                                         <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PRC-a8-nsX">
+                                                <rect key="frame" x="0.0" y="0.0" width="382" height="32"/>
+                                                <segments>
+                                                    <segment title="Text"/>
+                                                    <segment title="Visual"/>
+                                                    <segment title="Environment"/>
+                                                </segments>
+                                            </segmentedControl>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="d8a-vT-f4C">
-                                                <rect key="frame" x="0.0" y="0.0" width="382" height="1003.5"/>
+                                                <rect key="frame" x="0.0" y="43" width="382" height="1003.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDG-N6-O3x" customClass="DSTextView" customModule="Thesis" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="100"/>
-                                                        <color key="backgroundColor" red="0.92985275889999996" green="0.92985275889999996" blue="0.92985275889999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="100" id="fr2-KZ-axl"/>
                                                         </constraints>
@@ -62,50 +70,11 @@
                                                             <outlet property="delegate" destination="9pv-A4-QxB" id="xfq-Mx-IaP"/>
                                                         </connections>
                                                     </view>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="66a-CT-v5b">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="66a-CT-v5b">
                                                         <rect key="frame" x="0.0" y="112" width="382" height="35"/>
                                                         <subviews>
-                                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yn4-lP-2fD">
-                                                                <rect key="frame" x="0.0" y="0.0" width="69" height="35"/>
-                                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                <state key="normal" title="    Answer    ">
-                                                                    <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                </state>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="8"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </button>
-                                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dui-HW-XzE">
-                                                                <rect key="frame" x="81" y="0.0" width="131" height="35"/>
-                                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                <state key="normal" title="    Add to Knowledge    ">
-                                                                    <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                </state>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="8"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </button>
-                                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oL7-lY-WJ4">
-                                                                <rect key="frame" x="224" y="0.0" width="72" height="35"/>
-                                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                <state key="normal" title="    Analyze    ">
-                                                                    <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                                </state>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="8"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </button>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPa-dB-5y3">
-                                                                <rect key="frame" x="308" y="0.0" width="55" height="35"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="119.5" height="35"/>
                                                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <state key="normal" title="    Train    ">
@@ -120,12 +89,32 @@
                                                                     <action selector="startTraining:" destination="9pv-A4-QxB" eventType="touchUpInside" id="9jj-IS-yND"/>
                                                                 </connections>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="240" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rd6-Ep-2tc">
-                                                                <rect key="frame" x="375" y="0.0" width="7" height="35"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oL7-lY-WJ4">
+                                                                <rect key="frame" x="131.5" y="0.0" width="119" height="35"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <state key="normal" title="    Analyze    ">
+                                                                    <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="8"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </button>
+                                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yn4-lP-2fD">
+                                                                <rect key="frame" x="262.5" y="0.0" width="119.5" height="35"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <state key="normal" title="    Answer    ">
+                                                                    <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="8"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </button>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="81J-Ow-3f4"/>
@@ -246,7 +235,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GHD-5H-gsw">
                                                         <rect key="frame" x="0.0" y="473" width="382" height="281"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Analyzed Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6k-Ma-WrC">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Input" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6k-Ma-WrC">
                                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="23"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                                 <nil key="textColor"/>
@@ -368,7 +357,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cdE-PU-gbH" userLabel="Classification SV">
-                                                <rect key="frame" x="0.0" y="1015.5" width="382" height="4588"/>
+                                                <rect key="frame" x="0.0" y="1058.5" width="382" height="4588"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MED-O2-G1I">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="468"/>
@@ -995,16 +984,10 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ACM-bq-gKV">
-                                                                                <rect key="frame" x="0.0" y="31" width="382" height="19.5"/>
+                                                                                <rect key="frame" x="0.0" y="31" width="382" height="0.0"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="254" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Visual Analysis" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emV-tS-7kt">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="187" height="19.5"/>
-                                                                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
-                                                                                        <color key="textColor" name="Semi Text Color"/>
-                                                                                        <nil key="highlightedColor"/>
-                                                                                    </label>
-                                                                                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Woc-Zq-OcK">
-                                                                                        <rect key="frame" x="195" y="0.0" width="187" height="19.5"/>
+                                                                                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Woc-Zq-OcK">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                                                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
@@ -1012,16 +995,10 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ebc-1M-9FA">
-                                                                                <rect key="frame" x="0.0" y="58.5" width="382" height="19.5"/>
+                                                                                <rect key="frame" x="0.0" y="39" width="382" height="0.0"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="254" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Visual Analysis" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cc8-QR-iK0" userLabel="Visual Prediction">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="187" height="19.5"/>
-                                                                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
-                                                                                        <color key="textColor" name="Semi Text Color"/>
-                                                                                        <nil key="highlightedColor"/>
-                                                                                    </label>
-                                                                                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pif-Lm-xiP">
-                                                                                        <rect key="frame" x="195" y="0.0" width="187" height="19.5"/>
+                                                                                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pif-Lm-xiP">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                                                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
@@ -1029,7 +1006,7 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="0f0-qO-lGA">
-                                                                                <rect key="frame" x="0.0" y="86" width="382" height="30.5"/>
+                                                                                <rect key="frame" x="0.0" y="47" width="382" height="69.5"/>
                                                                                 <connections>
                                                                                     <action selector="btnAddToTraining:" destination="9pv-A4-QxB" eventType="touchUpInside" id="kmG-Te-ASa"/>
                                                                                 </connections>
@@ -1090,10 +1067,10 @@
                                                                         <rect key="frame" x="0.0" y="12" width="382" height="84"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PzO-Y6-cjO">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="56.5"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="76"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Analysis" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDO-aa-DzC">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="56.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="76"/>
                                                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
@@ -1101,16 +1078,10 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="f7e-wS-v9u">
-                                                                                <rect key="frame" x="0.0" y="64.5" width="382" height="19.5"/>
+                                                                                <rect key="frame" x="0.0" y="84" width="382" height="0.0"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="254" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Visual Analysis" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Pv-U3-lz7" userLabel="Visual Prediction">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="187" height="19.5"/>
-                                                                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
-                                                                                        <color key="textColor" name="Semi Text Color"/>
-                                                                                        <nil key="highlightedColor"/>
-                                                                                    </label>
                                                                                     <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHv-do-Zkp">
-                                                                                        <rect key="frame" x="195" y="0.0" width="187" height="19.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                                                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
@@ -1765,28 +1736,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
-                    <navigationItem key="navigationItem" title="Canvas" largeTitleDisplayMode="always" id="jPf-DM-IrN">
-                        <leftBarButtonItems>
-                            <barButtonItem title="Item" image="play" catalog="system" style="plain" id="60v-oO-jPy">
-                                <connections>
-                                    <action selector="pressedPlayBack" destination="9pv-A4-QxB" id="Cxg-1H-dVK"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Item" image="stop" catalog="system" style="plain" id="gv6-gI-To1">
-                                <connections>
-                                    <action selector="pressedStopAndSaveRecording" destination="9pv-A4-QxB" id="Eqf-ee-Dx2"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                    <tabBarItem key="tabBarItem" title="Analysis" image="first" id="acW-dT-cKf"/>
+                    <navigationItem key="navigationItem" title="CS Reasoning" largeTitleDisplayMode="always" id="jPf-DM-IrN">
+                        <barButtonItem key="leftBarButtonItem" image="mic" catalog="system" id="Ki2-M6-KBQ">
+                            <connections>
+                                <action selector="pressedStartListening" destination="9pv-A4-QxB" id="OqL-jN-Arq"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem image="video" catalog="system" id="Zfi-ef-Gtx"/>
                             <barButtonItem image="camera" catalog="system" id="gAO-mh-9NP"/>
-                            <barButtonItem image="mic" catalog="system" id="Ki2-M6-KBQ">
-                                <connections>
-                                    <action selector="pressedStartListening" destination="9pv-A4-QxB" id="OqL-jN-Arq"/>
-                                </connections>
-                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -1819,7 +1778,6 @@
                         <outlet property="initialAssestmentAnalysisView" destination="UZu-4P-Gm9" id="Z19-PO-73k"/>
                         <outlet property="initialAssestmentContainerView" destination="sv7-KT-fOr" id="R4b-M0-12D"/>
                         <outlet property="inputTextView" destination="KDG-N6-O3x" id="0wd-x3-csn"/>
-                        <outlet property="knowledgeButton" destination="dui-HW-XzE" id="hiH-06-xBH"/>
                         <outlet property="languageContainerView" destination="vsq-9T-ICG" id="Idy-vH-s2n"/>
                         <outlet property="languageView" destination="6uZ-Jb-K1Y" id="r0C-ue-XSr"/>
                         <outlet property="locationContainerView" destination="lYQ-wW-IRx" id="enz-ko-p8d"/>
@@ -1839,6 +1797,7 @@
                         <outlet property="progressView" destination="qSR-Bu-dOk" id="1cs-l8-zop"/>
                         <outlet property="recommendationAnalysisView" destination="CEJ-G8-94d" id="cax-L7-y5g"/>
                         <outlet property="recommendationContainerView" destination="mab-3Y-0DV" id="VjG-xY-cZT"/>
+                        <outlet property="segmentControl" destination="PRC-a8-nsX" id="1Yf-42-DeF"/>
                         <outlet property="sentimentContainerView" destination="WXJ-RE-EIN" id="UlI-sn-5tT"/>
                         <outlet property="sentimentView" destination="EKN-J6-Y2k" id="2mP-h0-9hC"/>
                         <outlet property="snappedImageView" destination="HN6-NS-4aH" id="Zaf-EW-RZk"/>
@@ -1911,9 +1870,7 @@
         <image name="camera" catalog="system" width="64" height="48"/>
         <image name="first" width="30" height="30"/>
         <image name="mic" catalog="system" width="54" height="64"/>
-        <image name="play" catalog="system" width="60" height="64"/>
         <image name="second" width="30" height="30"/>
-        <image name="stop" catalog="system" width="64" height="56"/>
         <image name="tornado" catalog="system" width="58" height="64"/>
         <image name="video" catalog="system" width="64" height="40"/>
         <namedColor name="SecondaryBackgroundColor">
