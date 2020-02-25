@@ -1,7 +1,7 @@
 Common Sense Reasoning in Autonomous Artificial Intelligent Agents through Mobile Computing
 ==========================================
 
-This repository contains work from my Master's thesis at Harvard University. 
+This repository contains work completed for my ALM IT degree at Harvard Extension School.
 
 Abstract
 --------
